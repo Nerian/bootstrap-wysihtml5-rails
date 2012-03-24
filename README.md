@@ -43,6 +43,8 @@ Add necessary stylesheet file to app/assets/stylesheets/application.css
 Add necessary javascript(s) files to app/assets/javascripts/application.js
 
 ``` javascript
+//= require jquery            # Not included
+//= require bootstrap-button  # Not included
 //= require wysihtml5
 //= require bootstrap-wysihtml5
 ```
