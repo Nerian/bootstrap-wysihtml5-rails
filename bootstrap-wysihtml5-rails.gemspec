@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Gonzalo Rodríguez-Baltanás Díaz"]
   gem.email         = ["siotopo@gmail.com"]
   gem.description   = %q{A wysiwyg text editor for Twitter Bootstrap}
-  gem.homepage      = "https://github.com/Nerian/bootstrap-datepicker-rails"
+  gem.homepage      = "https://github.com/Nerian/bootstrap-wysihtml5-rails"
   gem.summary       = gem.description
 
   gem.name          = "bootstrap-wysihtml5-rails"
