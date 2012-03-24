@@ -40,13 +40,22 @@ Add necessary stylesheet file to app/assets/stylesheets/application.css
 
 ## Javascripts
 
-Add necessary javascript(s) files to app/assets/javascripts/application.js
+Bootstrap-wysihtml5 depends on jquery and bootstrap-button.
 
 ``` javascript
 //= require jquery            # Not included
 //= require bootstrap-button  # Not included
+```
+
+Add necessary javascript(s) files to app/assets/javascripts/application.js
+
+```javascript
 //= require wysihtml5
 //= require bootstrap-wysihtml5
+
+or
+
+//= require bootstrap-wysihtml5-all
 ```
 
 ## Using bootstrap-wysihtml5-rails
