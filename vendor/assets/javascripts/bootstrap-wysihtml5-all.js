@@ -1,2 +1,2 @@
-//= require bootstrap-wysihtml5
 //= require wysihtml5
+//= require bootstrap-wysihtml5
