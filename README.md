@@ -11,7 +11,7 @@ https://github.com/jhollingworth/bootstrap-wysihtml5
 
 bootstrap-wysihtml5-rails project integrates it with Rails 3 assets pipeline.
 
-http://github.com/Nerian/bootstrap-wysihtml5
+https://github.com/Nerian/bootstrap-wysihtml5-rails
 
 
 ## Rails > 3.1
