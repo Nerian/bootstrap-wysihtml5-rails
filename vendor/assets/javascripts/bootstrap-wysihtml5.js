@@ -13,44 +13,54 @@
 						    "</ul>" +
 						"</li>",
 		"emphasis":     "<li>" +
-							"<div class='btn-group'>" +		
-							    "<a class='btn' data-wysihtml5-command='bold' title='CTRL+B'>Bold</a>" +
-							    "<a class='btn' data-wysihtml5-command='italic' title='CTRL+I'>Italic</a>" +
-							"</div>" +
-						"</li>",
-		"lists": 		"<li>" +
-							"<div class='btn-group'>" +
-						    	"<a class='btn' data-wysihtml5-command='insertUnorderedList' title='Unordered List'><i class='icon-list'></i></a>" +
-							    "<a class='btn' data-wysihtml5-command='insertOrderedList' title='Ordered List'><i class='icon-th-list'></i></a>" +
-							    "<a class='btn' data-wysihtml5-command='Indent' title='Indent'><i class='icon-indent-left'></i></a>" + 
-							    "<a class='btn' data-wysihtml5-command='Outdent' title='Outdent'><i class='icon-indent-right'></i></a>" + 							    
-							"</div>" +
-						"</li>"
+							"<div class='btn-group'>" 
+							    + "<a class='btn' data-wysihtml5-command='bold' title='CTRL+B'>Bold</a>" 
+							    + "<a class='btn' data-wysihtml5-command='italic' title='CTRL+I'>Italic</a>" 
+							    //,+ "<a class='btn' data-wysihtml5-command='underline' title='CTRL+U'>Underline</a>" 
+							+ "</div>" 
+						+ "</li>",
+		"lists": 		"<li>" 
+							+ "<div class='btn-group'>" 
+						    	+ "<a class='btn' data-wysihtml5-command='insertUnorderedList' title='Unordered List'><i class='icon-list'></i></a>" 
+							    + "<a class='btn' data-wysihtml5-command='insertOrderedList' title='Ordered List'><i class='icon-th-list'></i></a>" 
+							    + "<a class='btn' data-wysihtml5-command='Outdent' title='Outdent'><i class='icon-indent-right'></i></a>"  							    
+							    + "<a class='btn' data-wysihtml5-command='Indent' title='Indent'><i class='icon-indent-left'></i></a>" 
+							+ "</div>" 
+						+ "</li>",
+
+		"html": 
+						"<li>"
+							+ "<div class='btn-group'>"
+								+ "<a class='btn' data-wysihtml5-action='change_view' title='Edit HTML'><i class='icon-pencil'></i></a>" 
+							+ "</div>"
+						+ "</li>"
 	};
 	
 	var defaultOptions = {
 		"font-styles": true,
 		"emphasis": true,
-		"lists": true
-	};
-
-	var parserRules = {
-		tags: {
-			b:  {},
-			i:  {},
-			br: {},
-			ol: {},
-			ul: {},
-			li: {},
-			h1: {},
-			h2: {},
-			a:  {
-				set_attributes: {
-					target: "_blank",
-					rel:    "nofollow"
-				},
-				check_attributes: {
-					href:   "url" // important to avoid XSS
+		"lists": true,
+		"html": false,
+		events: {},
+		parserRules: {
+			tags: {
+				"b":  {},
+				"i":  {},
+				"br": {},
+				"ol": {},
+				"ul": {},
+				"li": {},
+				"h1": {},
+				"h2": {},
+				"u": 1,
+				"a":  {
+					set_attributes: {
+						target: "_blank",
+						rel:    "nofollow"
+					},
+					check_attributes: {
+						href:   "url" // important to avoid XSS
+					}
 				}
 			}
 		}
@@ -59,11 +69,8 @@
 	var Wysihtml5 = function(el, options) {
 		this.el = el;
 		this.toolbar = this.createToolbar(el, options || defaultOptions);
-		this.editor =  new wysi.Editor(this.el.attr('id'), {
-    		toolbar: this.toolbar.attr('id'),
-		parserRules: parserRules
-  		});
-  		
+		this.editor =  this.createEditor(options);
+
   		$('iframe.wysihtml5-sandbox').each(function(i, el){
 			$(el.contentWindow).off('focus.wysihtml5').on({
 			  'focus.wysihtml5' : function(){
@@ -75,6 +82,27 @@
 
 	Wysihtml5.prototype = {
 		constructor: Wysihtml5,
+
+		createEditor: function(options) {
+			var parserRules = defaultOptions.parserRules; 
+
+			if(options && options.parserRules) {
+				parserRules = options.parserRules;
+			}
+				
+			var editor = new wysi.Editor(this.el.attr('id'), {
+	    		toolbar: this.toolbar.attr('id'),
+				parserRules: parserRules
+	  		});
+
+	  		if(options && options.events) {
+				for(var eventName in options.events) {
+					editor.on(eventName, options.events[eventName]);
+				}
+			}	
+
+	  		return editor;
+		},
 		
 		createToolbar: function(el, options) {
 			var toolbar = $("<ul/>", {
@@ -84,7 +112,7 @@
 				});
 
 			for(var key in defaultOptions) {
-				var value;
+				var value = false;
 				
 				if(options[key] != undefined) {
 					if(options[key] == true) {
@@ -96,6 +124,13 @@
 				
 				if(value == true) {
 					toolbar.append(templates[key]);
+
+					if(key == "html") {
+						var changeViewSelector = "a[data-wysihtml5-action='change_view']";
+						toolbar.find(changeViewSelector).click(function(e) {
+							toolbar.find('a.btn').not(changeViewSelector).toggleClass('disabled');
+						});
+					}
 				}
 			}
 			
