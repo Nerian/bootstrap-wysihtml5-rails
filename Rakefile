@@ -8,6 +8,7 @@ task 'update' do
   system("cp bootstrap-wysihtml5/src/bootstrap-wysihtml5.css vendor/assets/stylesheets/bootstrap-wysihtml5.css")
   system("cp bootstrap-wysihtml5/src/bootstrap-wysihtml5.js vendor/assets/javascripts/bootstrap-wysihtml5.js")
   system("cp bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0_rc2.js vendor/assets/javascripts/wysihtml5.js")
+  system("git status")
 end
 
 desc "Build the gem"
