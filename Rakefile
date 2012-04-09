@@ -18,4 +18,5 @@ end
 desc "Publish the gem"
 task 'publish' do
   system("gem push bootstrap-wysihtml5-rails-#{BootstrapWysihtml5Rails::Rails::VERSION}.gem")
+  system("git push")
 end
