@@ -1,5 +1,5 @@
 /**
- * @license wysihtml5 v0.3.0_rc2
+ * @license wysihtml5 v0.3.0_rc3
  * https://github.com/xing/wysihtml5
  *
  * Author: Christopher Blum (https://github.com/tiff)
@@ -9,7 +9,7 @@
  *
  */
 var wysihtml5 = {
-  version: "0.3.0_rc2",
+  version: "0.3.0_rc3",
   
   // namespaces
   commands:   {},
@@ -5315,7 +5315,7 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
         "XMLHttpRequest", "XDomainRequest"
       ],
       /**
-       * Properties to unset/proetect on the document object
+       * Properties to unset/protect on the document object
        */
       documentProperties  = [
         "referrer",
@@ -6761,12 +6761,14 @@ wysihtml5.Commands = Base.extend(
    */
   exec: function(command, value) {
     var obj     = wysihtml5.commands[command],
+        args    = wysihtml5.lang.array(arguments).get(),
         method  = obj && obj.exec;
     
     this.editor.fire("beforecommand:composer");
     
     if (method) {
-      return method.call(obj, this.composer, command, value);
+      args.unshift(this.composer);
+      return method.apply(obj, args);
     } else {
       try {
         // try/catch for buggy firefox
@@ -6789,9 +6791,11 @@ wysihtml5.Commands = Base.extend(
    */
   state: function(command, commandValue) {
     var obj     = wysihtml5.commands[command],
+        args    = wysihtml5.lang.array(arguments).get(),
         method  = obj && obj.state;
     if (method) {
-      return method.call(obj, this.composer, command, commandValue);
+      args.unshift(this.composer);
+      return method.apply(obj, args);
     } else {
       try {
         // try/catch for buggy firefox
@@ -6905,7 +6909,7 @@ wysihtml5.Commands = Base.extend(
       hasElementChild = !!anchor.querySelector("*");
       isEmpty = textContent === "" || textContent === wysihtml5.INVISIBLE_SPACE;
       if (!hasElementChild && isEmpty) {
-        dom.setTextContent(anchor, anchor.href);
+        dom.setTextContent(anchor, attributes.text || anchor.href);
         whiteSpace = doc.createTextNode(" ");
         composer.selection.setAfter(anchor);
         composer.selection.insertNode(whiteSpace);
@@ -6958,7 +6962,7 @@ wysihtml5.Commands = Base.extend(
  */
 (function(wysihtml5) {
   var undef,
-      REG_EXP = /wysiwyg-font-size-[a-z]+/g;
+      REG_EXP = /wysiwyg-font-size-[a-z\-]+/g;
   
   wysihtml5.commands.fontSize = {
     exec: function(composer, command, size) {
@@ -7660,17 +7664,14 @@ wysihtml5.Commands = Base.extend(
     }
   };
 })(wysihtml5);(function(wysihtml5) {
-  var undef,
-      REG_EXP     = /wysiwyg-text-decoration-underline/g,
-      CLASS_NAME  = "wysiwyg-text-decoration-underline";
-  
+  var undef;
   wysihtml5.commands.underline = {
     exec: function(composer, command) {
-      return wysihtml5.commands.formatInline.exec(composer, command, "span", CLASS_NAME, REG_EXP);
+      return wysihtml5.commands.formatInline.exec(composer, command, "u");
     },
 
     state: function(composer, command) {
-      return wysihtml5.commands.formatInline.state(composer, command, "span", CLASS_NAME, REG_EXP);
+      return wysihtml5.commands.formatInline.state(composer, command, "u");
     },
 
     value: function() {
@@ -8371,15 +8372,23 @@ wysihtml5.views.View = Base.extend(
     // When copying styles, we only get the computed style which is never returned in percent unit
     // Therefore we've to recalculate style onresize
     if (!wysihtml5.browser.hasCurrentStyleProperty()) {
-      dom.observe(win, "resize", function() {
-        var originalDisplayStyle = dom.getStyle("display").from(textareaElement);
+      var winObserver = dom.observe(win, "resize", function() {
+        // Remove event listener if composer doesn't exist anymore
+        if (!dom.contains(document.documentElement, that.iframe)) {
+          winObserver.stop();
+          return;
+        }
+        var originalTextareaDisplayStyle = dom.getStyle("display").from(textareaElement),
+            originalComposerDisplayStyle = dom.getStyle("display").from(that.iframe);
         textareaElement.style.display = "";
+        that.iframe.style.display = "none";
         dom.copyStyles(RESIZE_STYLE)
           .from(textareaElement)
           .to(that.iframe)
           .andTo(that.focusStylesHost)
           .andTo(that.blurStylesHost);
-        textareaElement.style.display = originalDisplayStyle;
+        that.iframe.style.display = originalComposerDisplayStyle;
+        textareaElement.style.display = originalTextareaDisplayStyle;
       });
     }
   
