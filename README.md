@@ -30,7 +30,7 @@ gem 'bootstrap-wysihtml5-rails', :require => 'bootstrap-wysihtml5-rails',
 
 and run bundle install.
 
-This gem doesn't include bootstrap. You can get Bootstrap here: https://github.com/anjlab/bootstrap-rails 
+This gem doesn't include Bootstrap. You can get Bootstrap here: https://github.com/anjlab/bootstrap-rails 
 
 ## Stylesheets
 
