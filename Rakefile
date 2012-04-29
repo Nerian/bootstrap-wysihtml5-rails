@@ -21,3 +21,10 @@ task 'publish' do
   system("gem push bootstrap-wysihtml5-rails-#{BootstrapWysihtml5Rails::Rails::VERSION}.gem")
   system("git push")
 end
+
+desc "Release a new version"
+task "release" do
+  system("gem build bootstrap-wysihtml5-rails.gemspec")
+  system("gem push bootstrap-wysihtml5-rails-#{BootstrapWysihtml5Rails::Rails::VERSION}.gem")
+  system("git push")
+end
