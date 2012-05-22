@@ -32,17 +32,15 @@ and run bundle install.
 
 This gem doesn't include Bootstrap. You can get Bootstrap here: https://github.com/anjlab/bootstrap-rails 
 
-## Stylesheets
+## Configuration
 
-Add necessary stylesheet file to app/assets/stylesheets/application.css
+app/assets/stylesheets/application.css
 
 ``` css
 *= require bootstrap-wysihtml5
 ```
 
-## Javascripts
-
-Bootstrap-wysihtml5 depends on jquery and bootstrap-button.
+Bootstrap-wysihtml5 depends on jquery and bootstrap-button. Make sure to require it in the manifest file.
 
 ``` javascript
 //= require jquery            # Not included
@@ -59,6 +57,8 @@ or
 
 //= require bootstrap-wysihtml5-all
 ```
+
+You may need to restart your rails server.
 
 ## Using bootstrap-wysihtml5-rails
 
