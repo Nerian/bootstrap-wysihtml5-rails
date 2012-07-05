@@ -10,6 +10,7 @@
                                "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='div'>Normal text</a></li>" +
                                "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='h1'>Heading 1</a></li>" +
                                "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='h2'>Heading 2</a></li>" +
+                               "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='h3'>Heading 3</a></li>" +
                            "</ul>" +
                        "</li>",
         "emphasis":    "<li>" +
@@ -86,6 +87,7 @@
                 "li": {},
                 "h1": {},
                 "h2": {},
+                "h3": {},
                 "blockquote": {},
                 "u": 1,
                 "img": {
