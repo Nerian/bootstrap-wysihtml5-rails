@@ -6892,12 +6892,17 @@ wysihtml5.Commands = Base.extend(
 
       // if <a> contains url-like text content, rename it to <code> to prevent re-autolinking
       // else replace <a> with its childNodes
+
+      
       if (textContent.match(dom.autoLink.URL_REG_EXP) && !codeElement) {
         // <code> element is used to prevent later auto-linking of the content
         codeElement = dom.renameElement(anchor, "code");
       } else {
         dom.replaceWithChildNodes(anchor);
       }
+
+      dom.replaceWithChildNodes(anchor);
+
     }
   }
 
@@ -6935,8 +6940,8 @@ wysihtml5.Commands = Base.extend(
         dom.setTextContent(anchor, attributes.text || anchor.href);
         whiteSpace = doc.createTextNode(" ");
         composer.selection.setAfter(anchor);
-        composer.selection.insertNode(whiteSpace);
-        elementToSetCaretAfter = whiteSpace;
+        //composer.selection.insertNode(whiteSpace);
+        //elementToSetCaretAfter = whiteSpace;
       }
     }
     composer.selection.setAfter(elementToSetCaretAfter);
@@ -6958,16 +6963,17 @@ wysihtml5.Commands = Base.extend(
      */
     exec: function(composer, command, value) {
       var anchors = this.state(composer, command);
+      
+      // Remove existing anchors
       if (anchors) {
-        // Selection contains links
-        composer.selection.executeAndRestore(function() {
-          _removeFormat(composer, anchors);
-        });
-      } else {
-        // Create links
-        value = typeof(value) === "object" ? value : { href: value };
-        _format(composer, value);
+        for(var i = 0; i < anchors.length; i++) {
+          parent = anchors[i].parentNode;
+          parent.removeChild(anchors[i]);
+        }
       }
+      // Create links
+      value = typeof(value) === "object" ? value : { href: value };
+      _format(composer, value);
     },
 
     state: function(composer, command) {
@@ -8534,6 +8540,12 @@ wysihtml5.views.View = Base.extend(
       }
     });
 
+
+    // ---------- proxy events ------------
+    dom.observe(element, ["keyup", "keydown", "keypress"], function(event) {
+        that.parent.fire(event.type, event).fire(event.type + ":composer", event);
+    });
+
     // --------- neword event ---------
     dom.observe(element, "keyup", function(event) {
       var keyCode = event.keyCode;
@@ -8755,8 +8767,9 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
          * Calling focus() or blur() on an element doesn't synchronously trigger the attached focus/blur events
          * This is the case for focusin and focusout, so let's use them whenever possible, kkthxbai
          */
-        events = wysihtml5.browser.supportsEvent("focusin") ? ["focusin", "focusout", "change"] : ["focus", "blur", "change"];
-    
+        //events = wysihtml5.browser.supportsEvent("focusin") ? ["focusin", "focusout", "change"] : ["focus", "blur", "change"];
+        events = wysihtml5.browser.supportsEvent("focusin") ? ["focusin", "focusout", "change", "keyup", "keydown", "keypress"] : ["focus", "blur", "change", "keyup", "keydown", "keypress"]; 
+
     parent.observe("beforeload", function() {
       wysihtml5.dom.observe(element, events, function(event) {
         var eventName = eventMapping[event.type] || event.type;
