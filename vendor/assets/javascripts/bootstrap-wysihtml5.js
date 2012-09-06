@@ -14,9 +14,9 @@
                        "</li>",
         "emphasis":    "<li>" +
                            "<div class='btn-group'>" +
-                               "<a class='btn' data-wysihtml5-command='bold' title='CTRL+B'>Bold</a>" +
-                               "<a class='btn' data-wysihtml5-command='italic' title='CTRL+I'>Italic</a>" +
-                               "<a class='btn' data-wysihtml5-command='underline' title='CTRL+U'>Underline</a>" +
+                               "<a class='btn' data-wysihtml5-command='bold' title='CTRL+B'><i class='icon-bold'></i></a>" +
+                               "<a class='btn' data-wysihtml5-command='italic' title='CTRL+I'><i class='icon-italic'></i></a>" +
+                               "<a class='btn' data-wysihtml5-command='underline' title='CTRL+U'><i class='icon-underline'></i></a>" +
                            "</div>" +
                        "</li>",
         "lists":       "<li>" +
@@ -52,7 +52,7 @@
                                    "<a href='#' class='btn btn-primary' data-dismiss='modal'>Insert link</a>" +
                                "</div>" +
                            "</div>" +
-                           "<a class='btn' data-wysihtml5-command='createLink' title='Insert link'><i class='icon-share'></i></a>" +
+                           "<a class='btn' data-wysihtml5-command='createLink' title='Insert link'><i class='icon-link'></i></a>" +
                        "</li>",
         "image":       "<li>" +
                            "<div class='bootstrap-wysihtml5-insert-image-modal modal hide fade'>" +
@@ -74,7 +74,7 @@
         "html":
                        "<li>" +
                            "<div class='btn-group'>" +
-                               "<a class='btn' data-wysihtml5-action='change_view' title='Edit HTML'><i class='icon-pencil'></i></a>" +
+                               "<a class='btn' data-wysihtml5-action='change_view' title='Edit HTML'>HTML</a>" +
                            "</div>" +
                        "</li>"
     };
@@ -137,6 +137,7 @@
             });
         });
     };
+
 
     Wysihtml5.prototype = {
 
