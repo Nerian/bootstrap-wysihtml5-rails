@@ -14,9 +14,9 @@
                        "</li>",
         "emphasis":    "<li>" +
                            "<div class='btn-group'>" +
-                               "<a class='btn' data-wysihtml5-command='bold' title='CTRL+B'>Bold</a>" +
-                               "<a class='btn' data-wysihtml5-command='italic' title='CTRL+I'>Italic</a>" +
-                               "<a class='btn' data-wysihtml5-command='underline' title='CTRL+U'>Underline</a>" +
+                               "<a class='btn' data-wysihtml5-command='bold' title='CTRL+B'><i class='icon-bold'></i></a>" +
+                               "<a class='btn' data-wysihtml5-command='italic' title='CTRL+I'><i class='icon-italic'></i></a>" +
+                               "<a class='btn' data-wysihtml5-command='underline' title='CTRL+U'><i class='icon-underline'></i></a>" +
                            "</div>" +
                        "</li>",
         "lists":       "<li>" +
@@ -34,14 +34,25 @@
                                    "<h3>Insert Link</h3>" +
                                "</div>" +
                                "<div class='modal-body'>" +
-                                   "<input value='http://' class='bootstrap-wysihtml5-insert-link-url input-xlarge'>" +
+                                    "<div class='control-group'>" +
+                                      "<label class='control-label'>Text to display</label>" +
+                                        "<div class='controls'>" +
+                                          "<input class='bootstrap-wysihtml5-insert-link-url-display-text input-xlarge'>" +
+                                        "</div>" + 
+                                    "</div>" +
+                                    "<div class='control-group'>" +
+                                      "<label class='control-label'>Link</label>" +
+                                        "<div class='controls'>" +
+                                          "<input value='http://' class='bootstrap-wysihtml5-insert-link-url input-xlarge'>" +
+                                        "</div>" + 
+                                    "</div>" +
                                "</div>" +
                                "<div class='modal-footer'>" +
                                    "<a href='#' class='btn' data-dismiss='modal'>Cancel</a>" +
                                    "<a href='#' class='btn btn-primary' data-dismiss='modal'>Insert link</a>" +
                                "</div>" +
                            "</div>" +
-                           "<a class='btn' data-wysihtml5-command='createLink' title='Link'><i class='icon-share'></i></a>" +
+                           "<a class='btn' data-wysihtml5-command='createLink' title='Insert link'><i class='icon-link'></i></a>" +
                        "</li>",
         "image":       "<li>" +
                            "<div class='bootstrap-wysihtml5-insert-image-modal modal hide fade'>" +
@@ -63,7 +74,7 @@
         "html":
                        "<li>" +
                            "<div class='btn-group'>" +
-                               "<a class='btn' data-wysihtml5-action='change_view' title='Edit HTML'><i class='icon-pencil'></i></a>" +
+                               "<a class='btn' data-wysihtml5-action='change_view' title='Edit HTML'>HTML</a>" +
                            "</div>" +
                        "</li>"
     };
@@ -100,6 +111,7 @@
                     set_attributes: {
                         target: "_blank",
                         rel:    "nofollow"
+
                     },
                     check_attributes: {
                         href:   "url" // important to avoid XSS
@@ -125,6 +137,7 @@
             });
         });
     };
+
 
     Wysihtml5.prototype = {
 
@@ -246,18 +259,22 @@
             var self = this;
             var insertLinkModal = toolbar.find('.bootstrap-wysihtml5-insert-link-modal');
             var urlInput = insertLinkModal.find('.bootstrap-wysihtml5-insert-link-url');
+            var urlDisplayText = insertLinkModal.find('.bootstrap-wysihtml5-insert-link-url-display-text');
             var insertButton = insertLinkModal.find('a.btn-primary');
             var initialValue = urlInput.val();
 
             var insertLink = function() {
                 var url = urlInput.val();
                 urlInput.val(initialValue);
+                var displayText = urlDisplayText.val();
                 self.editor.composer.commands.exec("createLink", {
                     href: url,
                     target: "_blank",
-                    rel: "nofollow"
+                    rel: "nofollow",
+                    text: displayText,
                 });
             };
+
             var pressedEnter = false;
 
             urlInput.keypress(function(e) {
@@ -278,10 +295,35 @@
             });
 
             toolbar.find('a[data-wysihtml5-command=createLink]').click(function() {
+                // Clear previous values
+                urlInput.val("http://");
+                urlDisplayText.val("");
+
+                // Get link and range for cursor
+                var link = self.editor.composer.commands.state("createLink");
+                var range = self.editor.composer.selection.getRange();
+                
+                // Update href
+                if (link && link[0] && link[0].href) {
+                  urlInput.val(link[0].href);
+                }
+
+                // Make display text equal to the selected range, if range exists
+                if (range != "" && range) {
+                  urlDisplayText.val(range);
+                } 
+
+                // else, if there was a previous display text use that
+                else {
+                  if (link && link[0] && link[0].text) {
+                    urlDisplayText.val(link[0].text);
+                  }
+                }
+
                 insertLinkModal.modal('show');
                 insertLinkModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
-					e.stopPropagation();
-				});
+					         e.stopPropagation();
+				        });
                 return false;
             });
 
