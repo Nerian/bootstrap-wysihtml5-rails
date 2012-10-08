@@ -1,2 +1,2 @@
-//= require wysihtml5
-//= require core
+//= require ./wysihtml5
+//= require ./core
