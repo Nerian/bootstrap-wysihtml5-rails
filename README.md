@@ -70,11 +70,9 @@ Just call wysihtml5() with any selector.
 <script type="text/javascript">
 	$('#some-textarea').wysihtml5();
 </script>
+```
 
 A live example:  http://jsfiddle.net/5UUrg/
-
-
-```
 
 ## License
 Copyright (c) 2011 Gonzalo Rodríguez-Baltanás Díaz
