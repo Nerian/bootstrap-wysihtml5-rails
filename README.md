@@ -58,8 +58,8 @@ You may include all locales like this:
 
 Or just add the ones that you want
 
-//= require bootstrap-wysihtml5/de-DE
-//= require bootstrap-wysihtml5/es-ES
+//= require bootstrap-wysihtml5/locales/de-DE
+//= require bootstrap-wysihtml5/locales/es-ES
 ```
 
 You may need to restart your rails server.
