@@ -3,12 +3,27 @@ require File.expand_path('../lib/bootstrap-wysihtml5-rails/version', __FILE__)
 
 desc "Update assets"
 task 'update' do
+  origin_lib_path = "bootstrap-wysihtml5/lib"
+  origin_src_path = "bootstrap-wysihtml5/src"
+  dest_javascript_path = "vendor/assets/javascripts/bootstrap-wysihtml5"
+  dest_css_path = "vendor/assets/stylesheets/bootstrap-wysihtml5"
+  
   system("rm -rf bootstrap-wysihtml5")
   system("git clone git://github.com/jhollingworth/bootstrap-wysihtml5.git")
-  system("cp bootstrap-wysihtml5/src/bootstrap-wysihtml5.css vendor/assets/stylesheets/bootstrap-wysihtml5.css")
-  system("cp bootstrap-wysihtml5/src/bootstrap-wysihtml5.js vendor/assets/javascripts/bootstrap-wysihtml5.js")
-  system("cp bootstrap-wysihtml5/lib/css/wysiwyg-color.css vendor/assets/stylesheets/wysiwyg-color.css")
-  system("cp bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js vendor/assets/javascripts/wysihtml5.js")
+  
+  system("cp #{origin_src_path}/bootstrap-wysihtml5.css #{dest_css_path}/core.css")
+  system("cp #{origin_src_path}/bootstrap-wysihtml5.js #{dest_javascript_path}/core.js")
+  
+  Dir.foreach("bootstrap-wysihtml5/src/locales") do |file|
+    unless file == '.' || file == '..'
+      abbreviated_file_name = file.gsub('bootstrap-wysihtml5.', '')
+      system("cp #{origin_src_path}/locales/#{file} #{dest_javascript_path}/locales/#{abbreviated_file_name}")
+    end
+  end
+  
+  system("cp #{origin_lib_path}/js/wysihtml5-0.3.0.js #{dest_javascript_path}/wysihtml5.js")
+  system("cp #{origin_lib_path}/css/wysiwyg-color.css #{dest_css_path}/wysiwyg-color.css")
+  
   system("git status")
 end
 

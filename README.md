@@ -50,12 +50,16 @@ Bootstrap-wysihtml5 depends on jquery and bootstrap-button. Make sure to require
 Add necessary javascript(s) files to app/assets/javascripts/application.js
 
 ```javascript
-//= require wysihtml5
 //= require bootstrap-wysihtml5
 
-or
+You may include all locales like this:
 
-//= require bootstrap-wysihtml5-all
+//= require bootstrap-wysihtml5/locales
+
+Or just add the ones that you want
+
+//= require bootstrap-wysihtml5/de-DE
+//= require bootstrap-wysihtml5/es-ES
 ```
 
 You may need to restart your rails server.
