@@ -140,7 +140,7 @@
         createToolbar: function(el, options) {
             var self = this;
             var toolbar = $("<ul/>", {
-                'class' : "wysihtml5-toolbar",
+                'class' : "wysihtml5-toolbar well",
                 'style': "display:none"
             });
             var culture = options.locale || defaultOptions.locale || "en";
