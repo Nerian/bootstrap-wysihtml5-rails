@@ -63,7 +63,7 @@
                     "</div>" +
                     "<div class='modal-body'>" +
                       "<input value='http://' class='bootstrap-wysihtml5-insert-image-url input-xlarge'>" +
-                       console.log(images.items)+
+                       console.log(images['items'])+
                     "</div>" +
                     "<div class='modal-footer'>" +
                       "<a href='#' class='btn' data-dismiss='modal'>" + locale.image.cancel + "</a>" +
