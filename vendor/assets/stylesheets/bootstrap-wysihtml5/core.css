@@ -1,7 +1,9 @@
 ul.wysihtml5-toolbar {
-	margin: 0;
-	padding: 0;
-	display: block;
+  margin: 0;
+  padding: 5px;
+  display: block;
+  padding-bottom: 0px;
+  margin-top: 8px;
 }
 
 ul.wysihtml5-toolbar::after {
