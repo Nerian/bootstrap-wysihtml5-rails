@@ -413,7 +413,7 @@
     var images  = $.fn.wysihtml5.images =
         var that = this
         $.getJSON('/assets.json', function(data) {
-            var that.items = [];
+            that.items = [];
             $.each(data, function(key, val) {
                 that.items.push(val['url'] + "<br />");
             });
