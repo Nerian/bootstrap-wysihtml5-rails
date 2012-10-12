@@ -411,7 +411,7 @@
     }
 
     var images  = $.fn.wysihtml5.images =
-        that = this
+        var that = this
         $.getJSON('/assets.json', function(data) {
             var that.items = [];
             $.each(data, function(key, val) {

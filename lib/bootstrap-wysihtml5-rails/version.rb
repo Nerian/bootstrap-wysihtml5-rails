@@ -1,5 +1,5 @@
 module BootstrapWysihtml5Rails
   module Rails
-    VERSION = "0.3.2.13"
+    VERSION = "0.3.2.14"
   end
 end
