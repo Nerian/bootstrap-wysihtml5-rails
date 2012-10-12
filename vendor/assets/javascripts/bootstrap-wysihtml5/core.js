@@ -412,7 +412,7 @@
 
     var listImages = function() {
         var items = [];
-        $.getJSON('/asset.json', function(data) {
+        $.getJSON('/assets.json', function(data) {
             $.each(data, function(key, val) {
                 items.push('<tr><td>' + val['name'] + '</td><td>' + val['url'] + '</td></tr>');
             });
