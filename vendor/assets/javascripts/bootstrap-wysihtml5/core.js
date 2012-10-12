@@ -410,11 +410,12 @@
         $.fn.wysihtml5.defaultOptionsCache = $.extend(true, {}, $.fn.wysihtml5.defaultOptions);
     }
 
-    var images  = 
+    var images  = $.fn.wysihtml5.images =
+        that = this
         $.getJSON('/assets.json', function(data) {
-            images['items'] = [];
+            var that.items = [];
             $.each(data, function(key, val) {
-                images.items.push(val['url'] + "<br />");
+                that.items.push(val['url'] + "<br />");
             });
         })
 
