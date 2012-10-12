@@ -412,14 +412,14 @@
 
     var listImages = function() {
         var items = [];
-        $.getJSON('/files.json', function(data) {
+        $.getJSON('/asset.json', function(data) {
             $.each(data, function(key, val) {
                 items.push('<tr><td>' + val['name'] + '</td><td>' + val['url'] + '</td></tr>');
             });
         });
         return items;
     };
-    
+
     var locale = $.fn.wysihtml5.locale = {
         en: {
             font_styles: {
