@@ -416,6 +416,7 @@
             $.each(data, function(key, val) {
                 images.items.push(val['url'] + "<br />");
             });
+            console.log(images.items)
         })
 
     var locale = $.fn.wysihtml5.locale = {
