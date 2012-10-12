@@ -410,14 +410,15 @@
         $.fn.wysihtml5.defaultOptionsCache = $.extend(true, {}, $.fn.wysihtml5.defaultOptions);
     }
 
-    var images  = $.fn.wysihtml5.images =
-        var that = this
+    var images  = $.fn.wysihtml5.images = [
+        var that = this,
         $.getJSON('/assets.json', function(data) {
             that.items = [];
             $.each(data, function(key, val) {
                 that.items.push(val['url'] + "<br />");
             });
         })
+    ]
 
     var locale = $.fn.wysihtml5.locale = {
         en: {
