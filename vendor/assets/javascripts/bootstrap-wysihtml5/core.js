@@ -411,14 +411,15 @@
     }
 
     var listImages = function() {
-        var items = []
+        var items = [];
         $.getJSON('/files.json', function(data) {
             $.each(data, function(key, val) {
-                items.push('<tr><td>' + val['name'] + '</td><td>' + val['url'] '</td></tr>');
+                items.push('<tr><td>' + val['name'] + '</td><td>' + val['url'] + '</td></tr>');
             });
         });
-        return items
-    }
+        return items;
+    };
+    
     var locale = $.fn.wysihtml5.locale = {
         en: {
             font_styles: {
