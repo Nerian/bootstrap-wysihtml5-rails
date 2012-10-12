@@ -63,7 +63,7 @@
                     "</div>" +
                     "<div class='modal-body'>" +
                       "<input value='http://' class='bootstrap-wysihtml5-insert-image-url input-xlarge'>" +
-                       images.items.join()+
+                       images.items.join('<br />')+
                     "</div>" +
                     "<div class='modal-footer'>" +
                       "<a href='#' class='btn' data-dismiss='modal'>" + locale.image.cancel + "</a>" +
@@ -414,7 +414,7 @@
         $.getJSON('/assets.json', function(data) {
             images['items'] = [];
             $.each(data, function(key, val) {
-                images.items.push('<tr><td>' + val['name'] + '</td><td>' + val['url'] + '</td></tr>');
+                images.items.push(val['url']);
             });
         })
 
