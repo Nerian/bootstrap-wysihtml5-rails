@@ -63,7 +63,8 @@
                     "</div>" +
                     "<div class='modal-body'>" +
                       "<input value='http://' class='bootstrap-wysihtml5-insert-image-url input-xlarge'>" +
-                       images.items.join()+
+                       "<table id='images-list' class='table-bordered table table-hover table-condensed'>"+
+                       "</table>"+
                     "</div>" +
                     "<div class='modal-footer'>" +
                       "<a href='#' class='btn' data-dismiss='modal'>" + locale.image.cancel + "</a>" +
@@ -104,6 +105,9 @@
     };
 
 
+
+
+
     var Wysihtml5 = function(el, options) {
         this.el = el;
         this.toolbar = this.createToolbar(el, options || defaultOptions);
@@ -139,13 +143,21 @@
         },
 
         createToolbar: function(el, options) {
+
             var self = this;
             var toolbar = $("<ul/>", {
                 'class' : "wysihtml5-toolbar well",
                 'style': "display:none"
             });
+
+
             var culture = options.locale || defaultOptions.locale || "en";
             for(var key in defaultOptions) {
+
+                if(key === 'imagesUrl') {
+                    this.getImages();
+                }
+
                 var value = false;
 
                 if(options[key] !== undefined) {
@@ -194,6 +206,23 @@
             this.el.before(toolbar);
 
             return toolbar;
+        },
+
+        getImages: function() {
+            $.getJSON(defaultOptions.imagesUrl, function(data) {
+                var items = [];
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        items.push("<tr class='image-url pointer' data-image-url='" + data[key].url + "'><td>" + data[key].name + "</td></tr>");
+                    }
+                }
+                $("#images-list").html(items.join())
+                $('.image-url').on('click', function() {
+                    var modal = $('.bootstrap-wysihtml5-insert-image-modal');
+                    var url = $(this).data('image-url')
+                    modal.find('input').val(url)
+                })
+            });
         },
 
         initHtml: function(toolbar) {
@@ -325,7 +354,8 @@
         init: function(options) {
             var that = this;
             return methods.shallowExtend.apply(that, [options]);
-        }
+        },
+
     };
 
     $.fn.wysihtml5 = function ( method ) {
@@ -348,6 +378,7 @@
         "html": false,
         "link": true,
         "image": true,
+        "imagesUrl": '/assets.json',
         events: {},
         parserRules: {
             classes: {
@@ -409,16 +440,6 @@
     if (typeof $.fn.wysihtml5.defaultOptionsCache === 'undefined') {
         $.fn.wysihtml5.defaultOptionsCache = $.extend(true, {}, $.fn.wysihtml5.defaultOptions);
     }
-
-    var images  = $.fn.wysihtml5.images = [
-        var that = this,
-        $.getJSON('/assets.json', function(data) {
-            that.items = [];
-            $.each(data, function(key, val) {
-                that.items.push(val['url'] + "<br />");
-            });
-        })
-    ]
 
     var locale = $.fn.wysihtml5.locale = {
         en: {
