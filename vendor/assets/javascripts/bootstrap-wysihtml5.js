@@ -263,13 +263,21 @@
             var insertButton = insertLinkModal.find('a.btn-primary');
             var initialValue = urlInput.val();
 
-            var LIQUID_OPENING_REG_EXP = "%7B%7B";
-            var LIQUID_CLOSING_REG_EXP = "%7D%7D";
+            var removeEscapingForLiquidTags = function(url) {
+              var LIQUID_OPENING_REG_EXP = "%7B%7B";
+              var LIQUID_CLOSING_REG_EXP = "%7D%7D";  
+              return url.replace(LIQUID_OPENING_REG_EXP, "{{").replace(LIQUID_CLOSING_REG_EXP, "}}")
+            }
 
             var insertLink = function() {
                 var url = urlInput.val();
-                urlInput.val(initialValue);
-                var displayText = urlDisplayText.val();
+                url = removeEscapingForLiquidTags(url);
+                urlInput.val(removeEscapingForLiquidTags(initialValue));
+                var displayText = removeEscapingForLiquidTags(urlDisplayText.val())
+                
+                if (urlDisplayText.val() == "")
+                    displayText = url;
+              
                 self.editor.composer.commands.exec("createLink", {
                     href: url,
                     target: "_blank",
@@ -308,8 +316,7 @@
                 
                 // Update href
                 if (link && link[0] && link[0].href) {
-                  var liquid_friendly_url = (link[0].href.replace(LIQUID_OPENING_REG_EXP, "{{")).replace(LIQUID_CLOSING_REG_EXP, "}}");
-                  urlInput.val(liquid_friendly_url);
+                  urlInput.val(removeEscapingForLiquidTags(link[0].href));
                 }
 
                 // Make display text equal to the selected range, if range exists
