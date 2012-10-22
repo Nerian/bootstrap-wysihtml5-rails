@@ -77,11 +77,14 @@ You may need to restart your rails server.
 Just call wysihtml5() with any selector.
 
 ```html
-<textarea id="some-textarea" placeholder="Enter text ..."></textarea>
+<textarea id="some-textarea" class='wysihtml5' placeholder="Enter text ..."></textarea>
 	
 <script type="text/javascript">
-	$('#some-textarea').wysihtml5();
+  $('.wysihtml5').each(function(i, elem) {
+    $(elem).wysihtml5();
+  });
 </script>
+
 ```
 
 A live example:  http://jsfiddle.net/5UUrg/
