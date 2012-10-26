@@ -6,7 +6,7 @@
         var tpl = {
             "font-styles":
                 "<li class='dropdown'>" +
-                  "<a class='btn dropdown-toggle' data-toggle='dropdown' href='#'>" +
+                  "<a class='btn btn-wysihtml5 dropdown-toggle' data-toggle='dropdown' href='#'>" +
                   "<i class='icon-font'></i>&nbsp;<span class='current-font'>" + locale.font_styles.normal + "</span>&nbsp;<b class='caret'></b>" +
                   "</a>" +
                   "<ul class='dropdown-menu'>" +
@@ -20,19 +20,19 @@
             "emphasis":
                 "<li>" +
                   "<div class='btn-group'>" +
-                    "<a class='btn' data-wysihtml5-command='bold' title='CTRL+B'>" + locale.emphasis.bold + "</a>" +
-                    "<a class='btn' data-wysihtml5-command='italic' title='CTRL+I'>" + locale.emphasis.italic + "</a>" +
-                    "<a class='btn' data-wysihtml5-command='underline' title='CTRL+U'>" + locale.emphasis.underline + "</a>" +
+                    "<a class='btn btn-wysihtml5' data-wysihtml5-command='bold' title='CTRL+B'>" + locale.emphasis.bold + "</a>" +
+                    "<a class='btn btn-wysihtml5' data-wysihtml5-command='italic' title='CTRL+I'>" + locale.emphasis.italic + "</a>" +
+                    "<a class='btn btn-wysihtml5' data-wysihtml5-command='underline' title='CTRL+U'>" + locale.emphasis.underline + "</a>" +
                   "</div>" +
                 "</li>",
 
             "lists":
                 "<li>" +
                   "<div class='btn-group'>" +
-                    "<a class='btn' data-wysihtml5-command='insertUnorderedList' title='" + locale.lists.unordered + "'><i class='icon-list'></i></a>" +
-                    "<a class='btn' data-wysihtml5-command='insertOrderedList' title='" + locale.lists.ordered + "'><i class='icon-th-list'></i></a>" +
-                    "<a class='btn' data-wysihtml5-command='Outdent' title='" + locale.lists.outdent + "'><i class='icon-indent-right'></i></a>" +
-                    "<a class='btn' data-wysihtml5-command='Indent' title='" + locale.lists.indent + "'><i class='icon-indent-left'></i></a>" +
+                    "<a class='btn btn-wysihtml5' data-wysihtml5-command='insertUnorderedList' title='" + locale.lists.unordered + "'><i class='icon-list'></i></a>" +
+                    "<a class='btn btn-wysihtml5' data-wysihtml5-command='insertOrderedList' title='" + locale.lists.ordered + "'><i class='icon-th-list'></i></a>" +
+                    "<a class='btn btn-wysihtml5' data-wysihtml5-command='Outdent' title='" + locale.lists.outdent + "'><i class='icon-indent-right'></i></a>" +
+                    "<a class='btn btn-wysihtml5' data-wysihtml5-command='Indent' title='" + locale.lists.indent + "'><i class='icon-indent-left'></i></a>" +
                   "</div>" +
                 "</li>",
 
@@ -51,7 +51,7 @@
                       "<a href='#' class='btn btn-primary' data-dismiss='modal'>" + locale.link.insert + "</a>" +
                     "</div>" +
                   "</div>" +
-                  "<a class='btn' data-wysihtml5-command='createLink' title='" + locale.link.insert + "'><i class='icon-share'></i></a>" +
+                  "<a class='btn btn-wysihtml5' data-wysihtml5-command='createLink' title='" + locale.link.insert + "'><i class='icon-share'></i></a>" +
                 "</li>",
 
             "image":
@@ -69,19 +69,19 @@
                       "<a href='#' class='btn btn-primary' data-dismiss='modal'>" + locale.image.insert + "</a>" +
                     "</div>" +
                   "</div>" +
-                  "<a class='btn' data-wysihtml5-command='insertImage' title='" + locale.image.insert + "'><i class='icon-picture'></i></a>" +
+                  "<a class='btn btn-wysihtml5' data-wysihtml5-command='insertImage' title='" + locale.image.insert + "'><i class='icon-picture'></i></a>" +
                 "</li>",
 
             "html":
                 "<li>" +
                   "<div class='btn-group'>" +
-                    "<a class='btn' data-wysihtml5-action='change_view' title='" + locale.html.edit + "'><i class='icon-pencil'></i></a>" +
+                    "<a class='btn btn-wysihtml5' data-wysihtml5-action='change_view' title='" + locale.html.edit + "'><i class='icon-pencil'></i></a>" +
                   "</div>" +
                 "</li>",
 
             "color":
                 "<li class='dropdown'>" +
-                  "<a class='btn dropdown-toggle' data-toggle='dropdown' href='#'>" +
+                  "<a class='btn dropdown-toggle btn-wysihtml5' data-toggle='dropdown' href='#'>" +
                     "<span class='current-color'>" + locale.colours.black + "</span>&nbsp;<b class='caret'></b>" +
                   "</a>" +
                   "<ul class='dropdown-menu'>" +
