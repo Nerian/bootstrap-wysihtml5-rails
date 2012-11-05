@@ -62,6 +62,14 @@ Or just add the ones that you want
 //= require bootstrap-wysihtml5/locales/es-ES
 ```
 
+Rails compiles and minify all stylesheets into a single file. We need `bootstrap-wysihtml5/wysiwyg-color.css` to be available as a single file.
+Modify `config/environments/production.rb` to contain:
+
+``` 
+# Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+config.assets.precompile += %w( bootstrap-wysihtml5/wysiwyg-color.css )
+```
+
 You may need to restart your rails server.
 
 ## Using bootstrap-wysihtml5-rails
@@ -69,11 +77,14 @@ You may need to restart your rails server.
 Just call wysihtml5() with any selector.
 
 ```html
-<textarea id="some-textarea" placeholder="Enter text ..."></textarea>
+<textarea id="some-textarea" class='wysihtml5' placeholder="Enter text ..."></textarea>
 	
 <script type="text/javascript">
-	$('#some-textarea').wysihtml5();
+  $('.wysihtml5').each(function(i, elem) {
+    $(elem).wysihtml5();
+  });
 </script>
+
 ```
 
 A live example:  http://jsfiddle.net/5UUrg/
