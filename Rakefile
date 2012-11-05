@@ -36,16 +36,7 @@ task 'update' do
 end
 
 desc "Release a new version"
-task "release" do  
-  version_file      = File.read("lib/bootstrap-wysihtml5-rails/version.rb")
-  minor             = version_file.match(/MINOR = \d+/)[0]  
-  minor_integer     = minor.match(/\d+/)[0].to_i + 1
-  replaced          = version_file.gsub(minor, "MINOR = " + minor_integer.to_s)
-  File.open("lib/bootstrap-wysihtml5-rails/version.rb", "w") { |file| file.puts replaced }
-  
-  system("git add . ")
-  system("git commit -m 'update assets'")
-  
+task "release" do    
   system("gem build bootstrap-wysihtml5-rails.gemspec")
   system("gem push bootstrap-wysihtml5-rails-#{BootstrapWysihtml5Rails::Rails::VERSION}.gem")
   system("git push")
