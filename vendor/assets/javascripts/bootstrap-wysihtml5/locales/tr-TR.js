@@ -22,11 +22,11 @@
         },
         link: {
             insert: "Link ekle",
-            cancel: "Geri al"
+            cancel: "İptal"
         },
         image: {
             insert: "Resim ekle",
-            cancel: "Geri al"
+            cancel: "İptal"
         },
         html: {
             edit: "HTML düzenle"
