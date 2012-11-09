@@ -9447,10 +9447,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
           this.toolbar = new wysihtml5.toolbar.Toolbar(this, this.config.toolbar);
         }
       });
-      
-      try {
-        console.log("Heya! This page is using wysihtml5 for rich text editing. Check out https://github.com/xing/wysihtml5");
-      } catch(e) {}
+
     },
     
     isCompatible: function() {
