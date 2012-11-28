@@ -347,7 +347,7 @@
             return methods.init.apply( this, arguments );
         } else {
             $.error( 'Method ' +  method + ' does not exist on jQuery.wysihtml5' );
-        }    
+        }
     };
 
     $.fn.wysihtml5.Constructor = Wysihtml5;
@@ -414,7 +414,7 @@
                 "div": 1
             }
         },
-        stylesheets: ["/assets/bootstrap-wysihtml5/wysiwyg-color.css"], // (path_to_project/lib/css/wysiwyg-color.css)
+        stylesheets: ["#{Rails.configuration.assets.prefix}/bootstrap-wysihtml5/wysiwyg-color.css"], // (path_to_project/lib/css/wysiwyg-color.css)
         locale: "en"
     };
 
