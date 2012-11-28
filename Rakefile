@@ -34,9 +34,13 @@ task 'update' do
   system("git status")
 end
 
-desc "Release a new version"
-task "release" do    
+desc "Build"
+task "build" do
   system("gem build bootstrap-wysihtml5-rails.gemspec")
+end
+
+desc "Release a new version"
+task "release" do      
   system("gem push bootstrap-wysihtml5-rails-#{BootstrapWysihtml5Rails::Rails::VERSION}.gem")
   system("git push")
 end
