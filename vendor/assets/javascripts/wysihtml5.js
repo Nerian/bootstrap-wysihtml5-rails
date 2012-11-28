@@ -6790,6 +6790,7 @@ wysihtml5.Commands = Base.extend(
     if (method) {
       args.unshift(this.composer);
       result = method.apply(obj, args);
+      this.editor.fire("execcommand:composer");
     } else {
       try {
         // try/catch for buggy firefox
@@ -9381,6 +9382,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
  *    undo:composer
  *    redo:composer
  *    beforecommand:composer
+ *    execcommand:composer
  *    aftercommand:composer
  *    change_view
  */
