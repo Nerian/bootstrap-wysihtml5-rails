@@ -5781,6 +5781,21 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
   var TILDE_ESCAPED = "%7E";
   wysihtml5.quirks.getCorrectInnerHTML = function(element) {
     var innerHTML = element.innerHTML;
+
+    var liquidBlocks = innerHTML.match(/({{.*?}}|{%.*?%})/g);
+
+    if (liquidBlocks) {
+      for (var i = 0; i < liquidBlocks.length; i++) {
+        var block = liquidBlocks[i];
+
+        var e       = document.createElement('div');
+        e.innerHTML = block;
+        var liquid  = e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+
+        innerHTML = innerHTML.replace(block, liquid);
+      }
+    }
+
     if (innerHTML.indexOf(TILDE_ESCAPED) === -1) {
       return innerHTML;
     }
