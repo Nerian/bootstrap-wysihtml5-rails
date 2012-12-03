@@ -22,7 +22,8 @@ task 'update' do
 
   core_file = File.read("#{origin_src_path}/bootstrap-wysihtml5.js")
   original_string = /stylesheets: \[".\/lib\/css\/wysiwyg-color.css"\]/
-  objective_string = 'stylesheets: ["#{Rails.configuration.assets.prefix}/bootstrap-wysihtml5/wysiwyg-color.css"]'  
+  objective_string = 'stylesheets: ["<%= Rails.configuration.assets.prefix + \'/bootstrap-wysihtml5/wysiwyg-color.css\' %>"]'      
+  
   replaced   = core_file.gsub(original_string, objective_string)
 
   File.open("#{dest_javascript_path}/core.js.erb", "w") { |file| file.puts replaced }
@@ -39,8 +40,8 @@ task "build" do
   system("gem build bootstrap-wysihtml5-rails.gemspec")
 end
 
-desc "Release a new version"
-task "release" do      
+desc "Publish a new version"
+task "publish" do      
   system("gem push bootstrap-wysihtml5-rails-#{BootstrapWysihtml5Rails::Rails::VERSION}.gem")
   system("git push")
 end
