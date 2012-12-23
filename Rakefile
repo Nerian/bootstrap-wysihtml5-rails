@@ -41,7 +41,7 @@ task "build" do
 end
 
 desc "Publish a new version"
-task "publish" do
+task :publish => :build do
   system("gem push bootstrap-wysihtml5-rails-#{BootstrapWysihtml5Rails::Rails::VERSION}.gem")
   system("git push")
 end
