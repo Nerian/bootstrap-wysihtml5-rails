@@ -76,8 +76,20 @@
                            "<div class='btn-group'>" +
                                "<a class='btn' data-wysihtml5-action='change_view' title='Edit HTML'>HTML</a>" +
                            "</div>" +
+                       "</li>",
+
+        "customerAttributesDropdown":
+                       "<li>" +
+                           "<div class='btn-group'>" +
+                               "<a class='btn dropdown-toggle' data-toggle='dropdown' href='#'>Insert Customer Attribute " +
+                                 "<span class='caret'></span>" +
+                               "</a>" +
+                               "<ul class='dropdown-menu' id='customer-dropdown'>" +
+                               "</ul>" + 
+                           "</div>" +
                        "</li>"
-    };
+                     }                      
+    
 
     var defaultOptions = {
         "font-styles": true,
@@ -86,6 +98,8 @@
         "html": false,
         "link": true,
         "image": true,
+        "customerAttributesDropdown": false,
+        customerAttributes: [],
         events: {},
         parserRules: {
             tags: {
@@ -177,8 +191,9 @@
                 }
 
                 if(value === true) {
-                    toolbar.append(templates[key]);
-
+                   
+                   toolbar.append(templates[key]);
+                    
                     if(key === "html") {
                         this.initHtml(toolbar);
                     }
@@ -189,6 +204,10 @@
 
                     if(key === "image") {
                         this.initInsertImage(toolbar);
+                    }
+
+                    if(key === "customerAttributesDropdown") {
+                        this.initInsertCustomerAttributesDropdown(toolbar);
                     }
                 }
             }
@@ -214,6 +233,15 @@
             toolbar.find(changeViewSelector).click(function(e) {
                 toolbar.find('a.btn').not(changeViewSelector).toggleClass('disabled');
             });
+        },
+
+        initInsertCustomerAttributesDropdown: function(toolbar) {
+            var dropdown = toolbar.find('#customer-dropdown');
+            var customerAttributes = defaultOptions["customerAttributes"]
+            console.log(customerAttributes)
+            for (var i = 0; i < customerAttributes.length; i++) {
+              dropdown.append('<li><a><span class="tab">' + customerAttributes[i] + '</span></a></li>');  
+            }
         },
 
         initInsertImage: function(toolbar) {
