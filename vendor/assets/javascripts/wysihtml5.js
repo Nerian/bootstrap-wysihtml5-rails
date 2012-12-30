@@ -6902,8 +6902,8 @@ wysihtml5.Commands = Base.extend(
         composer.selection.insertNode(textNode);
         whiteSpace = doc.createTextNode(" ");
         composer.selection.insertNode(whiteSpace);
-        elementToSetCaretAfter = whiteSpace;
-        composer.selection.setAfter(elementToSetCaretAfter);
+        //elementToSetCaretAfter = whiteSpace;
+        //composer.selection.setAfter(elementToSetCaretAfter);
     },
 
     value: function() {

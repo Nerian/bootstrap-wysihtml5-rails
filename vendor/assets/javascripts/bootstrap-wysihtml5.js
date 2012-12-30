@@ -246,7 +246,7 @@
             
             } else {
               for (var i = 0; i < customerAttributes.length; i++) {
-                dropdown.append('<li><a><span class="tab"> customer.' + customerAttributes[i] + '</span></a></li>');  
+                dropdown.append('<li><a href="#"><span class="tab">customer.' + customerAttributes[i] + '</span></a></li>');  
               };
 
               dropdown.find('li').click(function(e) {
