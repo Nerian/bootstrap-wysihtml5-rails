@@ -81,7 +81,7 @@
         "customerAttributesDropdown":
                        "<li>" +
                            "<div class='btn-group'>" +
-                               "<a class='btn dropdown-toggle' data-toggle='dropdown' href='#'>Insert Customer Attribute " +
+                               "<a class='btn dropdown-toggle' data-toggle='dropdown' href='#'>Insert Attribute " +
                                  "<span class='caret'></span>" +
                                "</a>" +
                                "<ul class='dropdown-menu' id='customer-dropdown'>" +
@@ -237,10 +237,21 @@
 
         initInsertCustomerAttributesDropdown: function(toolbar) {
             var dropdown = toolbar.find('#customer-dropdown');
-            var customerAttributes = defaultOptions["customerAttributes"]
-            console.log(customerAttributes)
-            for (var i = 0; i < customerAttributes.length; i++) {
-              dropdown.append('<li><a><span class="tab">' + customerAttributes[i] + '</span></a></li>');  
+            var customerAttributes = defaultOptions["customerAttributes"];
+            
+            if (customerAttributes.length == 0) {
+              dropdown.append('<li><a><span class="tab"> No attributes exist.</span></a></li>');
+            
+            } else {
+              for (var i = 0; i < customerAttributes.length; i++) {
+                dropdown.append('<li><a><span class="tab"> customer.' + customerAttributes[i] + '</span></a></li>');  
+              };
+
+              dropdown.find('li').click(function(e) {
+                e.preventDefault();
+                var attribute = ($(this).find('a span'))[0].innerText;
+                self.editor.composer.commands.exec("insertAttribute", attribute);
+              });
             }
         },
 

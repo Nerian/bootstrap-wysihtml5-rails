@@ -6891,6 +6891,31 @@ wysihtml5.Commands = Base.extend(
 })(wysihtml5);
 
 (function(wysihtml5) {
+  var undef;
+      
+  
+  wysihtml5.commands.insertAttribute = {
+    exec: function(composer, command, value) {
+        doc = composer.doc;
+        textNode = doc.createTextNode("{{" + value + "}}");
+        composer.selection.insertNode(textNode);
+        whiteSpace = doc.createTextNode(" ");
+        composer.selection.insertNode(whiteSpace);
+        elementToSetCaretAfter = whiteSpace;
+        composer.selection.setAfter(elementToSetCaretAfter);
+    },
+
+    value: function() {
+      return undef;
+    }
+  };
+})(wysihtml5);
+
+
+
+
+
+(function(wysihtml5) {
   var undef,
       NODE_NAME = "A",
       dom       = wysihtml5.dom;
@@ -8538,8 +8563,6 @@ wysihtml5.views.View = Base.extend(
       var dataTransfer = event.dataTransfer,
           data;
 
-
-      console.log('PASTED', event);
       if (dataTransfer && browser.supportsDataTransfer()) {
         data = dataTransfer.getData("text/html") || dataTransfer.getData("text/plain");
       }
