@@ -179,6 +179,7 @@
                 'style': "display:none"
             });
 
+
             for(var key in defaultOptions) {
                 var value = false;
 
@@ -191,8 +192,8 @@
                 }
 
                 if(value === true) {
-                   
-                   toolbar.append(templates[key]);
+
+                   if (key != "customerAttributesDropdown") toolbar.append(templates[key]);
                     
                     if(key === "html") {
                         this.initHtml(toolbar);
@@ -207,7 +208,10 @@
                     }
 
                     if(key === "customerAttributesDropdown") {
-                        this.initInsertCustomerAttributesDropdown(toolbar);
+                      if (options["customerAttributesDropdown"] === true && options["customerAttributes"] !== undefined) {
+                        toolbar.append(templates[key]);
+                        this.initInsertCustomerAttributesDropdown(toolbar, options["customerAttributes"]);
+                      }
                     }
                 }
             }
@@ -235,12 +239,10 @@
             });
         },
 
-        initInsertCustomerAttributesDropdown: function(toolbar) {
+        initInsertCustomerAttributesDropdown: function(toolbar, customerAttributes) {
             var dropdown = toolbar.find('#customer-dropdown');
-            var customerAttributes = defaultOptions["customerAttributes"];
-            
             if (customerAttributes.length == 0) {
-              dropdown.append('<li><a><span class="tab"> No attributes exist.</span></a></li>');
+              dropdown.append('<li><a><span class="tab"> No attributes found.</span></a></li>');
             
             } else {
               for (var i = 0; i < customerAttributes.length; i++) {
