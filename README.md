@@ -34,16 +34,14 @@ This gem doesn't include Bootstrap. You can get Bootstrap here: https://github.c
 
 ## Configuration
 
-app/assets/stylesheets/application.css
+Bootstrap-wysihtml5 depends on jquery and bootstrap.
 
+app/assets/stylesheets/application.css
 ``` css
 *= require bootstrap-wysihtml5
 ```
 
-Bootstrap-wysihtml5 depends on jquery and bootstrap.
-
-Add necessary javascript(s) files to app/assets/javascripts/application.js
-
+app/assets/javascripts/application.js
 ```javascript
 //= require bootstrap-wysihtml5
 
