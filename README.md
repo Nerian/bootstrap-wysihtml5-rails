@@ -40,12 +40,7 @@ app/assets/stylesheets/application.css
 *= require bootstrap-wysihtml5
 ```
 
-Bootstrap-wysihtml5 depends on jquery and bootstrap-button. Make sure to require it in the manifest file.
-
-``` javascript
-//= require jquery            # Not included
-//= require bootstrap-button  # Not included
-```
+Bootstrap-wysihtml5 depends on jquery and bootstrap.
 
 Add necessary javascript(s) files to app/assets/javascripts/application.js
 
