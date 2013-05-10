@@ -13,6 +13,9 @@
                 "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='h1' tabindex='-1'>" + locale.font_styles.h1 + "</a></li>" +
                 "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='h2' tabindex='-1'>" + locale.font_styles.h2 + "</a></li>" +
                 "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='h3' tabindex='-1'>" + locale.font_styles.h3 + "</a></li>" +
+                "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='h4'>" + locale.font_styles.h4 + "</a></li>" +
+                "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='h5'>" + locale.font_styles.h5 + "</a></li>" +
+                "<li><a data-wysihtml5-command='formatBlock' data-wysihtml5-command-value='h6'>" + locale.font_styles.h6 + "</a></li>" +
               "</ul>" +
             "</li>";
         },
@@ -50,6 +53,7 @@
                 "</div>" +
                 "<div class='modal-body'>" +
                   "<input value='http://' class='bootstrap-wysihtml5-insert-link-url input-xlarge'>" +
+                  "<label class='checkbox'> <input type='checkbox' class='bootstrap-wysihtml5-insert-link-target' checked>" + locale.link.target + "</label>" +
                 "</div>" +
                 "<div class='modal-footer'>" +
                   "<a href='#' class='btn' data-dismiss='modal'>" + locale.link.cancel + "</a>" +
@@ -282,6 +286,7 @@
             var self = this;
             var insertLinkModal = toolbar.find('.bootstrap-wysihtml5-insert-link-modal');
             var urlInput = insertLinkModal.find('.bootstrap-wysihtml5-insert-link-url');
+            var targetInput = insertLinkModal.find('.bootstrap-wysihtml5-insert-link-target');
             var insertButton = insertLinkModal.find('a.btn-primary');
             var initialValue = urlInput.val();
             var caretBookmark;
@@ -294,10 +299,12 @@
                   self.editor.composer.selection.setBookmark(caretBookmark);
                   caretBookmark = null;
                 }
+
+                var newWindow = targetInput.prop("checked");
                 self.editor.composer.commands.exec("createLink", {
-                    href: url,
-                    target: "_blank",
-                    rel: "nofollow"
+                    'href' : url,
+                    'target' : (newWindow ? '_blank' : '_self'),
+                    'rel' : (newWindow ? 'nofollow' : '')
                 });
             };
             var pressedEnter = false;
@@ -350,7 +357,7 @@
             });
         },
         shallowExtend: function (options) {
-            var settings = $.extend({}, $.fn.wysihtml5.defaultOptions, options || {});
+            var settings = $.extend({}, $.fn.wysihtml5.defaultOptions, options || {}, $(this).data());
             var that = this;
             return methods.bypassDefaults.apply(that, [settings]);
         },
@@ -416,6 +423,9 @@
                 "h1": {},
                 "h2": {},
                 "h3": {},
+                "h4": {},
+                "h5": {},
+                "h6": {},
                 "blockquote": {},
                 "u": 1,
                 "img": {
@@ -427,12 +437,10 @@
                     }
                 },
                 "a":  {
-                    set_attributes: {
-                        target: "_blank",
-                        rel:    "nofollow"
-                    },
                     check_attributes: {
-                        href:   "url" // important to avoid XSS
+                        'href': "url", // important to avoid XSS
+                        'target': 'alt',
+                        'rel': 'alt'
                     }
                 },
                 "span": 1,
@@ -456,7 +464,10 @@
                 normal: "Normal text",
                 h1: "Heading 1",
                 h2: "Heading 2",
-                h3: "Heading 3"
+                h3: "Heading 3",
+                h4: "Heading 4",
+                h5: "Heading 5",
+                h6: "Heading 6"
             },
             emphasis: {
                 bold: "Bold",
@@ -471,7 +482,8 @@
             },
             link: {
                 insert: "Insert link",
-                cancel: "Cancel"
+                cancel: "Cancel",
+                target: "Open link in new window"
             },
             image: {
                 insert: "Insert image",

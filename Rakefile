@@ -8,8 +8,11 @@ task 'update' do
   dest_javascript_path = "vendor/assets/javascripts/bootstrap-wysihtml5"
   dest_css_path = "vendor/assets/stylesheets/bootstrap-wysihtml5"
 
-  system("rm -rf bootstrap-wysihtml5")
-  system("git clone git://github.com/jhollingworth/bootstrap-wysihtml5.git")
+  if Dir.exist?('bootstrap-wysihtml5')
+    system("cd bootstrap-wysihtml5 && git pull && cd ..")
+  else
+    system("git clone git://github.com/jhollingworth/bootstrap-wysihtml5.git bootstrap-wysihtml5")
+  end
 
   system("cp #{origin_src_path}/bootstrap-wysihtml5.css #{dest_css_path}/core.css")
 
@@ -42,6 +45,8 @@ end
 
 desc "Publish a new version"
 task :publish => :build do
+  tags = `git tag`.split
+  system("git tag #{BootstrapWysihtml5Rails::Rails::VERSION}") unless tags.include?(BootstrapWysihtml5Rails::Rails::VERSION)
   system("gem push bootstrap-wysihtml5-rails-#{BootstrapWysihtml5Rails::Rails::VERSION}.gem")
   system("git push")
 end
