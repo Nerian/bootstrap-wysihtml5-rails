@@ -24,9 +24,9 @@
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
               "<div class='btn-group'>" +
-                "<a class='btn" + size + "' data-wysihtml5-command='bold' title='CTRL+B' tabindex='-1'>" + locale.emphasis.bold + "</a>" +
-                "<a class='btn" + size + "' data-wysihtml5-command='italic' title='CTRL+I' tabindex='-1'>" + locale.emphasis.italic + "</a>" +
-                "<a class='btn" + size + "' data-wysihtml5-command='underline' title='CTRL+U' tabindex='-1'>" + locale.emphasis.underline + "</a>" +
+                "<a class='btn" + size + "' data-wysihtml5-command='bold' title='CTRL+B' tabindex='-1'><i class='icon-bold'></i></a>" +
+                "<a class='btn" + size + "' data-wysihtml5-command='italic' title='CTRL+I' tabindex='-1'><i class='icon-italic'></i></a>" +
+                "<a class='btn" + size + "' data-wysihtml5-command='underline' title='CTRL+U' tabindex='-1'><i class='icon-underline'></i></a>" +
               "</div>" +
             "</li>";
         },
@@ -88,7 +88,7 @@
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
               "<div class='btn-group'>" +
-                "<a class='btn" + size + "' data-wysihtml5-action='change_view' title='" + locale.html.edit + "' tabindex='-1'><i class='icon-pencil'></i></a>" +
+                "<a class='btn" + size + "' data-wysihtml5-action='change_view' title='" + locale.html.edit + "' tabindex='-1'><i class='icon-code'></i></a>" +
               "</div>" +
             "</li>";
         },
@@ -187,7 +187,7 @@
                     if(key === "html") {
                         this.initHtml(toolbar);
                     }
-
+                    
                     if(key === "link") {
                         this.initInsertLink(toolbar);
                     }
@@ -195,6 +195,8 @@
                     if(key === "image") {
                         this.initInsertImage(toolbar);
                     }
+                    
+                   
                 }
             }
 
@@ -389,9 +391,9 @@
         "color": false,
         "emphasis": true,
         "lists": true,
-        "html": false,
         "link": true,
         "image": true,
+        "html": false,
         events: {},
         parserRules: {
             classes: {
