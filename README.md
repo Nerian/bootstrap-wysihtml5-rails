@@ -34,21 +34,14 @@ This gem doesn't include Bootstrap. You can get Bootstrap here: https://github.c
 
 ## Configuration
 
-app/assets/stylesheets/application.css
+Bootstrap-wysihtml5 depends on jquery and bootstrap.
 
+app/assets/stylesheets/application.css
 ``` css
 *= require bootstrap-wysihtml5
 ```
 
-Bootstrap-wysihtml5 depends on jquery and bootstrap-button. Make sure to require it in the manifest file.
-
-``` javascript
-//= require jquery            # Not included
-//= require bootstrap-button  # Not included
-```
-
-Add necessary javascript(s) files to app/assets/javascripts/application.js
-
+app/assets/javascripts/application.js
 ```javascript
 //= require bootstrap-wysihtml5
 
@@ -60,14 +53,6 @@ Or just add the ones that you want
 
 //= require bootstrap-wysihtml5/locales/de-DE
 //= require bootstrap-wysihtml5/locales/es-ES
-```
-
-Rails compiles and minify all stylesheets into a single file. We need `bootstrap-wysihtml5/wysiwyg-color.css` to be available as a single file.
-Modify `config/environments/production.rb` to contain:
-
-``` 
-# Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-config.assets.precompile += %w( bootstrap-wysihtml5/wysiwyg-color.css )
 ```
 
 You may need to restart your rails server.

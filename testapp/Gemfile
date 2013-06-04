@@ -12,8 +12,7 @@ group :assets do
   # gem 'therubyracer', :platform => :ruby
 
   gem 'uglifier', '>= 1.0.3'  
+  gem 'anjlab-bootstrap-rails', '>= 2.1', :require => 'bootstrap-rails'
+  gem 'bootstrap-wysihtml5-rails', :path => '../'
+  gem 'jquery-rails'
 end
-
-gem 'anjlab-bootstrap-rails', '>= 2.1', :require => 'bootstrap-rails'
-gem 'bootstrap-wysihtml5-rails', :path => '../'
-gem 'jquery-rails'
