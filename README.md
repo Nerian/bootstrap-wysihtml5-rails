@@ -30,7 +30,7 @@ gem 'bootstrap-wysihtml5-rails', :require => 'bootstrap-wysihtml5-rails',
 
 and run bundle install.
 
-This gem doesn't include Bootstrap. You can get Bootstrap here: https://github.com/anjlab/bootstrap-rails 
+This gem doesn't include Bootstrap. You can get Bootstrap here: https://github.com/anjlab/bootstrap-rails
 
 ## Configuration
 
@@ -63,7 +63,7 @@ Just call wysihtml5() with any selector.
 
 ```html
 <textarea id="some-textarea" class='wysihtml5' placeholder="Enter text ..."></textarea>
-	
+
 <script type="text/javascript">
   $('.wysihtml5').each(function(i, elem) {
     $(elem).wysihtml5();
@@ -73,6 +73,14 @@ Just call wysihtml5() with any selector.
 ```
 
 A live example:  http://jsfiddle.net/5UUrg/
+
+## If using Turbolinks
+
+```
+$(document).on('page:load', function(){
+  window['rangy'].initialized = false
+})
+```
 
 ## License
 Copyright (c) 2011 Gonzalo Rodríguez-Baltanás Díaz
