@@ -48,5 +48,5 @@ task :publish => :build do
   tags = `git tag`.split
   system("git tag #{BootstrapWysihtml5Rails::Rails::VERSION}") unless tags.include?(BootstrapWysihtml5Rails::Rails::VERSION)
   system("gem push bootstrap-wysihtml5-rails-#{BootstrapWysihtml5Rails::Rails::VERSION}.gem")
-  system("git push")
+  system("git push --follow-tags")
 end
