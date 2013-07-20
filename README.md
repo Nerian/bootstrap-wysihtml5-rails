@@ -1,5 +1,7 @@
 # Bootstrap Wysihtml5 for Rails
 
+[![endorse](https://api.coderwall.com/nerian/endorsecount.png)](https://coderwall.com/nerian)
+
 Bootstrap is a toolkit from Twitter designed to kickstart development of webapps and sites.
 It includes base CSS and HTML for typography, forms, buttons, tables, grids, navigation, and more.
 
