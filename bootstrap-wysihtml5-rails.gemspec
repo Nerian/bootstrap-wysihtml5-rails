@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{A wysiwyg text editor for Twitter Bootstrap}
   gem.homepage      = "https://github.com/Nerian/bootstrap-wysihtml5-rails"
   gem.summary       = gem.description
+  gem.license       = 'MIT'
 
   gem.name          = "bootstrap-wysihtml5-rails"
   gem.require_paths = ["lib"]

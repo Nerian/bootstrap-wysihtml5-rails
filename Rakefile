@@ -46,7 +46,8 @@ end
 desc "Publish a new version"
 task :publish => :build do
   tags = `git tag`.split
-  system("git tag #{BootstrapWysihtml5Rails::Rails::VERSION}") unless tags.include?(BootstrapWysihtml5Rails::Rails::VERSION)
-  system("gem push bootstrap-wysihtml5-rails-#{BootstrapWysihtml5Rails::Rails::VERSION}.gem")
-  system("git push --tags")
+  version = BootstrapWysihtml5Rails::Rails::VERSION
+  system("git tag -a #{version} -m 'Release #{version}' ") unless tags.include?(version)
+  system("gem push bootstrap-wysihtml5-rails-#{version}.gem")
+  system("git push --follow-tags")
 end

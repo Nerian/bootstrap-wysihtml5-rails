@@ -4,15 +4,13 @@ gem 'rails'
 
 gem 'sqlite3'
 
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+gem 'sass-rails'
+gem 'coffee-rails'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'  
-  gem 'anjlab-bootstrap-rails', '>= 2.1', :require => 'bootstrap-rails'
-  gem 'bootstrap-wysihtml5-rails', :path => '../'
-  gem 'jquery-rails'
-end
+gem 'uglifier'
+gem 'anjlab-bootstrap-rails', '>= 2.1', :require => 'bootstrap-rails'
+gem 'bootstrap-wysihtml5-rails', :path => '../'
+gem 'jquery-rails'
