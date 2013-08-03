@@ -1,5 +1,7 @@
 # Bootstrap Wysihtml5 for Rails
 
+[![Gem Version](https://badge.fury.io/rb/bootstrap-wysihtml5-rails.png)](http://badge.fury.io/rb/bootstrap-wysihtml5-rails)
+
 [![endorse](https://api.coderwall.com/nerian/endorsecount.png)](https://coderwall.com/nerian)
 
 Bootstrap is a toolkit from Twitter designed to kickstart development of webapps and sites.
