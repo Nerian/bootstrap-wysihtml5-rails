@@ -25,7 +25,7 @@ task 'update' do
 
   core_file = File.read("#{origin_src_path}/bootstrap-wysihtml5.js")
   original_string = /stylesheets: \[".\/lib\/css\/wysiwyg-color.css"\]/
-  objective_string = 'stylesheets: ["<%= Rails.configuration.assets.prefix + \'/bootstrap-wysihtml5/wysiwyg-color.css\' %>"]'
+  objective_string = "stylesheets: [<%= stylesheet_path('bootstrap-wysihtml5/wysiwyg-color.css') %>]"
 
   replaced   = core_file.gsub(original_string, objective_string)
 
