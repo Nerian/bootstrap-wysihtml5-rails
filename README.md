@@ -69,9 +69,13 @@ Just call wysihtml5() with any selector.
 <textarea id="some-textarea" class='wysihtml5' placeholder="Enter text ..."></textarea>
 
 <script type="text/javascript">
-  $('.wysihtml5').each(function(i, elem) {
-    $(elem).wysihtml5();
-  });
+  $(document).ready(function(){
+
+    $('.wysihtml5').each(function(i, elem) {
+      $(elem).wysihtml5();
+    });
+
+  })
 </script>
 
 ```
