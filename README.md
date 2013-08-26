@@ -43,11 +43,16 @@ Bootstrap-wysihtml5 depends on jquery and bootstrap.
 app/assets/stylesheets/application.css
 ``` css
 *= require bootstrap-wysihtml5
+// or
+*= require bootstrap-wysihtml5/b3
 ```
 
 app/assets/javascripts/application.js
 ```javascript
 //= require bootstrap-wysihtml5
+// or
+//= require bootstrap-wysihtml5/b3
+
 
 You may include all locales like this:
 
