@@ -25,7 +25,7 @@
               indered: "Augmenter le retrait"
         },
         link: {
-              target: "Ouvrir le lien dans une nouvelle fenêtre"
+              target: "Ouvrir le lien dans une nouvelle fenêtre",
               insert: "Insérer un lien",
               cancel: "Annuler"
         },
