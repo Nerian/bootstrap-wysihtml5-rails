@@ -3983,7 +3983,7 @@ wysihtml5.browser = (function() {
         realUrl = "http://" + realUrl;
       }
       
-      return '<a href="' + realUrl + '">' + displayUrl + '</a>' + punctuation;
+      return '<a target = "_blank" href="' + realUrl + '">' + displayUrl + '</a>' + punctuation;
     });
   }
   
