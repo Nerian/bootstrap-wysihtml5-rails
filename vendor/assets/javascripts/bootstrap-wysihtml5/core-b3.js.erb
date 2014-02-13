@@ -336,8 +336,6 @@
                 var linkUrl = urlInput.val();
                 var embedUrl = linkUrl;
 
-                errorSpan.hide();
-
                 if ( linkUrl.substr(0,31) == 'http://www.youtube.com/watch?v=' ) {
                     // Youtube video
                     var linkParams = linkUrl.substr(31);
@@ -346,8 +344,7 @@
                     urlInput.val(linkUrl);
                     self.editor.currentView.element.focus();
                     self.editor.composer.commands.exec("insertVideo", { src: embedUrl, width: '398', height: '224' });
-                    cleanUp();
-                    return true;
+                    resetFields();
                 } else if ( linkUrl.substr(0,17) == 'http://vimeo.com/' ) {
                     // Vimeo video
                     var linkParams = linkUrl.substr(17)
@@ -356,16 +353,15 @@
                     urlInput.val(linkUrl);
                     self.editor.currentView.element.focus();
                     self.editor.composer.commands.exec("insertVideo", { src: embedUrl, width: '500', height: '281' })
-                    cleanUp();
-                    return true;
+                    resetFields();
                 } else {
                     errorSpan.show();
                     return false;
                 }
             };
 
-            var cleanUp = function() {
-                console.log("Clearing up");
+            // Reset url input field and hide errors
+            var resetFields = function() {
                 urlInput.val('');
                 errorSpan.hide();
             }
@@ -394,7 +390,6 @@
             });
 
             toolbar.find('a[data-wysihtml5-command=insertVideo]').click(function() {
-                console.log("...");
                 insertVideoModal.modal('show');
                 insertVideoModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
                     e.stopPropagation();
