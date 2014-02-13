@@ -92,6 +92,35 @@
             "</li>";
         },
 
+        "video": function(locale) {
+            return "<li>" +
+                "<div class='bootstrap-wysihtml5-insert-video-modal modal fade'>" +
+                  "<div class='modal-dialog'>" +
+                    "<div class='modal-content'>" +
+                      "<div class='modal-header'>" +
+                          "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" +
+                          "<h4 class='modal-title'>" + locale.video.insert + "</h4>" +
+                        "</div>" +
+                        "<div class='modal-body'>" +
+                            "<div class='control-group'>" +
+                                "<input type='text' data-wysihtml5-dialog-field='src' value='' placeholder='http://www.youtube.com/watch?v=' class='bootstrap-wysihtml5-insert-video-url form-control'>" +
+                                "<span class='help-block'>" + locale.video.help + '</span>' +
+                            "</div>" +
+                            "<div class='control-group error form-inline'>" +
+                                "<label class='video-error'>" + locale.video.invalid + "</label>" +
+                            "</div>" +
+                        "</div>" +
+                        "<div class='modal-footer'>" +
+                            "<button type='button' class='btn btn-default' data-dismiss='modal'>" + locale.video.cancel + "</button>" +
+                            "<button type='button' class='btn btn-primary' data-dismiss='modal'>" + locale.video.insert + "</button>" +
+                        "</div>" +
+                      "</div>" +
+                    "</div>" +
+                  "</div>" +
+                "<a class='btn btn-default' data-wysihtml5-command='insertVideo' title='" + locale.video.insert + "'><i class='glyphicon glyphicon-film'></i></a>" +
+           "</li>";
+        },
+
         "html": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
@@ -155,7 +184,7 @@
 
         createEditor: function(options) {
             options = options || {};
-            
+
             // Add the toolbar to a clone of the options object so multiple instances
             // of the WYISYWG don't break because "toolbar" is already defined
             options = $.extend(true, {}, options);
@@ -202,6 +231,10 @@
 
                     if(key === "image") {
                         this.initInsertImage(toolbar);
+                    }
+
+                    if(key === "video") {
+                        this.initInsertVideo(toolbar);
                     }
                 }
             }
@@ -264,11 +297,11 @@
 
             insertButton.click(insertImage);
 
-            insertImageModal.on('shown', function() {
+            insertImageModal.on('shown.bs.modal', function() {
                 urlInput.focus();
             });
 
-            insertImageModal.on('hide', function() {
+            insertImageModal.on('hide.bs.modal', function() {
                 self.editor.currentView.element.focus();
             });
 
@@ -287,6 +320,86 @@
                 else {
                     return true;
                 }
+            });
+        },
+
+        initInsertVideo: function(toolbar) {
+            var self = this;
+            var insertVideoModal = toolbar.find('.bootstrap-wysihtml5-insert-video-modal');
+            var urlInput = insertVideoModal.find('.bootstrap-wysihtml5-insert-video-url');
+            var insertButton = insertVideoModal.find('.btn-primary');
+            var errorSpan = insertVideoModal.find('.video-error');
+
+            errorSpan.hide(); // hide initially
+
+            var insertVideo = function() {
+                var linkUrl = urlInput.val();
+                var embedUrl = linkUrl;
+
+                errorSpan.hide();
+
+                if ( linkUrl.substr(0,31) == 'http://www.youtube.com/watch?v=' ) {
+                    // Youtube video
+                    var linkParams = linkUrl.substr(31);
+                    embedUrl = 'http://www.youtube.com/embed/' + linkParams.split('&')[0];
+
+                    urlInput.val(linkUrl);
+                    self.editor.currentView.element.focus();
+                    self.editor.composer.commands.exec("insertVideo", { src: embedUrl, width: '398', height: '224' });
+                    cleanUp();
+                    return true;
+                } else if ( linkUrl.substr(0,17) == 'http://vimeo.com/' ) {
+                    // Vimeo video
+                    var linkParams = linkUrl.substr(17)
+                    embedUrl = 'http://player.vimeo.com/video/' + linkParams.split('&')[0];
+
+                    urlInput.val(linkUrl);
+                    self.editor.currentView.element.focus();
+                    self.editor.composer.commands.exec("insertVideo", { src: embedUrl, width: '500', height: '281' })
+                    cleanUp();
+                    return true;
+                } else {
+                    errorSpan.show();
+                    return false;
+                }
+            };
+
+            var cleanUp = function() {
+                console.log("Clearing up");
+                urlInput.val('');
+                errorSpan.hide();
+            }
+
+            urlInput.keypress(function(e) {
+                if(e.which == 13) {
+                    e.preventDefault(); // form was submitted in Chrome without this
+                    if (insertVideo()) {
+                        insertVideoModal.modal('hide');
+                    }
+                }
+            });
+
+            urlInput.on('focus', function(e) {
+                errorSpan.hide();
+            });
+
+            insertButton.click(insertVideo);
+
+            insertVideoModal.on('shown.bs.modal', function() {
+                urlInput.focus();
+            });
+
+            insertVideoModal.on('hide.bs.modal', function() {
+                self.editor.currentView.element.focus();
+            });
+
+            toolbar.find('a[data-wysihtml5-command=insertVideo]').click(function() {
+                console.log("...");
+                insertVideoModal.modal('show');
+                insertVideoModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
+                    e.stopPropagation();
+                });
+                return false;
             });
         },
 
@@ -326,11 +439,11 @@
 
             insertButton.click(insertLink);
 
-            insertLinkModal.on('shown', function() {
+            insertLinkModal.on('shown.bs.modal', function() {
                 urlInput.focus();
             });
 
-            insertLinkModal.on('hide', function() {
+            insertLinkModal.on('hide.bs.modal', function() {
                 self.editor.currentView.element.focus();
             });
 
@@ -387,7 +500,7 @@
             return methods.init.apply( this, arguments );
         } else {
             $.error( 'Method ' +  method + ' does not exist on jQuery.wysihtml5' );
-        }    
+        }
     };
 
     $.fn.wysihtml5.Constructor = Wysihtml5;
@@ -398,6 +511,7 @@
         "emphasis": true,
         "lists": true,
         "html": false,
+        "video": true,
         "link": true,
         "image": true,
         events: {},
@@ -451,6 +565,16 @@
                         'rel': 'alt'
                     }
                 },
+                "iframe": {
+                    "check_attributes": {
+                        "src":"url",
+                        "width":"numbers",
+                        "height":"numbers"
+                    },
+                    "set_attributes":{
+                        "frameborder":"0"
+                    }
+                },
                 "span": 1,
                 "div": 1,
                 // to allow save and edit files with code tag hacks
@@ -497,6 +621,12 @@
                 insert: "Insert image",
                 cancel: "Cancel"
             },
+            video: {
+                insert: "Insert Video",
+                cancel: "Cancel",
+                invalid: "Unrecognized video URL",
+                help: 'Youtube or Vimeo video URL'
+            },
             html: {
                 edit: "Edit HTML"
             },
@@ -518,3 +648,142 @@
 
 }(window.jQuery, window.wysihtml5);
 
+
+/** Insert Video Functions
+ *
+ */
+
+(function(wysihtml5) {
+    var NODE_NAME = "IFRAME";
+
+    wysihtml5.commands.insertVideo = {
+        /**
+         * @example
+         *    // either ...
+         *    wysihtml5.commands.insertVideo.exec(composer, 'insertVideo', 'http://www.youtube.com/embed/Hx_rRirV2vc');
+         *    // ... or ...
+         *    wysihtml5.commands.insertVideo.exec(composer, 'insertVideo', { src: 'http://www.youtube.com/embed/Hx_rRirV2vc', width: '560', height: '315' });
+         */
+        exec: function(composer, command, value) {
+            value = typeof(value) === "object" ? value : { src: value };
+            var doc   = composer.doc,
+                video = this.state(composer),
+                i,
+                parent;
+
+            if (video) {
+                // Video already selected, set the caret before it and delete it
+                composer.selection.setBefore(video);
+                parent = video.parentNode;
+                parent.removeChild(video);
+
+                // and it's parent <a> too if it hasn't got any other relevant child nodes
+                wysihtml5.dom.removeEmptyTextNodes(parent);
+                if (parent.nodeName === "A" && !parent.firstChild) {
+                    composer.selection.setAfter(parent);
+                    parent.parentNode.removeChild(parent);
+                }
+
+                // firefox and ie sometimes don't remove the video handles, even though the video was removed
+                wysihtml5.quirks.redraw(composer.element);
+                return;
+            }
+
+            video = doc.createElement(NODE_NAME);
+
+            for (i in value) {
+                video[i] = value[i];
+            }
+
+      composer.selection.insertNode(video);
+          if (wysihtml5.browser.hasProblemsSettingCaretAfterImg()) {
+            textNode = doc.createTextNode(wysihtml5.INVISIBLE_SPACE);
+            composer.selection.insertNode(textNode);
+            composer.selection.setAfter(textNode);
+          } else {
+            composer.selection.setAfter(video);
+        }
+        },
+
+        state: function(composer) {
+            var doc = composer.doc,
+                selectedNode,
+                text,
+                videosInSelection;
+
+            if (!wysihtml5.dom.hasElementWithTagName(doc, NODE_NAME)) {
+                return false;
+            }
+
+            selectedNode = composer.selection.getSelectedNode(doc);
+            if (!selectedNode) {
+                return false;
+            }
+
+            if (selectedNode.nodeName === NODE_NAME) {
+                // This works perfectly in IE
+                return selectedNode;
+            }
+
+            if (selectedNode.nodeType !== wysihtml5.ELEMENT_NODE) {
+                return false;
+            }
+
+            text = composer.selection.getText(doc);
+            text = wysihtml5.lang.string(text).trim();
+            if (text) {
+                return false;
+            }
+
+            videosInSelection = composer.selection.getNodes(doc, wysihtml5.ELEMENT_NODE, function(node) {
+                return node.nodeName === "IFRAME";
+            });
+
+            if (videosInSelection.length !== 1) {
+                return false;
+            }
+
+            return videosInSelection[0];
+        },
+
+        value: function(composer) {
+            var video = this.state(composer);
+            return video && video.src;
+        }
+    };
+}(wysihtml5));
+
+(function(wysihtml5) {
+  wysihtml5.commands.insertEmbedVideo = {
+    /**
+     * @example
+     *    wysihtml5.commands.insertEmbedVideo.exec(element, "insertEmbedVideo", "<iframe width="560" height="315" src="http://www.youtube.com/embed/dJfSS0ZXYdo" frameborder="0" allowfullscreen></iframe>");
+     */
+    exec: function(element, command, value) {
+      var code = value.src,
+    attributes = {
+      src: wysihtml5.commands.getAttributeValue.exec(code,"src"),
+      width: wysihtml5.commands.getAttributeValue.exec(code,"width"),
+      height: wysihtml5.commands.getAttributeValue.exec(code,"height")
+    },
+    obj = (Object.create) ? Object.create(attributes) : new Object(attributes); //Object.create doesn't work in IE8
+      wysihtml5.commands.insertVideo.exec(element, command, obj);
+    },
+
+    state: function(element) {
+      wysihtml5.commands.insertVideo.state(element);
+    },
+
+    value: function(element) {
+      wysihtml5.commands.insertVideo.value(element);
+    }
+  };
+}(wysihtml5));
+
+(function(wysihtml5) {
+  wysihtml5.commands.getAttributeValue = {
+    exec: function (code,attr){
+      return code.substring(parseInt(code.indexOf(attr))+attr.length + 2,code.length).split("\" ")[0];
+    }
+  };
+}(wysihtml5));
