@@ -345,6 +345,7 @@
                     self.editor.currentView.element.focus();
                     self.editor.composer.commands.exec("insertVideo", { src: embedUrl, width: '398', height: '224' });
                     resetFields();
+                    return true;
                 } else if ( linkUrl.substr(0,17) == 'http://vimeo.com/' ) {
                     // Vimeo video
                     var linkParams = linkUrl.substr(17)
@@ -354,6 +355,7 @@
                     self.editor.currentView.element.focus();
                     self.editor.composer.commands.exec("insertVideo", { src: embedUrl, width: '500', height: '281' })
                     resetFields();
+                    return true;
                 } else {
                     errorSpan.show();
                     return false;
