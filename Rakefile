@@ -42,9 +42,9 @@ task 'update' do
     system("cd bootstrap-wysihtml5 && git pull && cd ..")
   else
     system("git clone git://github.com/jhollingworth/bootstrap-wysihtml5.git bootstrap-wysihtml5")
-    system("cd bootstrap-wysihtml5 && git remote add b3 git@github.com:artillery/bootstrap-wysihtml5.git")
-    system("cd bootstrap-wysihtml5 && git fetch b3")
-    system("cd bootstrap-wysihtml5 && git checkout -b tb3 b3/master")
+    # system("cd bootstrap-wysihtml5 && git remote add b3 git@github.com:artillery/bootstrap-wysihtml5.git")
+    # system("cd bootstrap-wysihtml5 && git fetch b3")
+    # system("cd bootstrap-wysihtml5 && git checkout -b tb3 b3/master")
   end
 
   Dir.foreach("bootstrap-wysihtml5/src/locales") do |file|
@@ -58,7 +58,14 @@ task 'update' do
   system("cp #{ORIGIN_LIB_PATH}/css/wysiwyg-color.css #{DEST_CSS_PATH}/wysiwyg-color.css")
 
   b2
-  b3
+  # b3
+
+  # ["#{DEST_JAVASCRIPT_PATH}/core.js.erb", "#{DEST_JAVASCRIPT_PATH}/core-b3.js.erb"].each do |file|
+  ["#{DEST_JAVASCRIPT_PATH}/core.js.erb"].each do |file|
+    initial = File.read(file)
+    initial = "//= depend_on_asset \"bootstrap-wysihtml5/wysiwyg-color.css\"\n\n" + initial
+    File.write(file, initial)
+  end
 
   system("git status")
 end
