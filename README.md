@@ -9,14 +9,15 @@ It includes base CSS and HTML for typography, forms, buttons, tables, grids, nav
 
 http://twitter.github.com/bootstrap/
 
-Bootstrap Wysihtml5 is a plugin for Bootstrap designed by James Hollingworth. It provides a stylish wysiwyg editor for Bootstrap.
+Bootstrap Wysihtml5 is a plugin for Bootstrap designed by James Hollingworth. It provides a stylish wysiwyg editor for Bootstrap. We use Christian Sterzl's fork.
 
-https://github.com/jhollingworth/bootstrap-wysihtml5
+https://github.com/Waxolunist/bootstrap3-wysihtml5-bower
 
 bootstrap-wysihtml5-rails project integrates it with Rails 3 assets pipeline.
 
 https://github.com/Nerian/bootstrap-wysihtml5-rails
 
+__Latest version with Bootstrap 2 support was `0.3.1.24`. New releases only package Bootstrap 3 support.__
 
 ## Rails > 3.1
 Include bootstrap-wysihtml5-rails in Gemfile;
@@ -28,31 +29,25 @@ gem 'bootstrap-wysihtml5-rails'
 or you can install from latest build;
 
 ``` ruby
-gem 'bootstrap-wysihtml5-rails', :require => 'bootstrap-wysihtml5-rails',
-                              :git => 'git://github.com/Nerian/bootstrap-wysihtml5-rails.git'
+gem 'bootstrap-wysihtml5-rails', :git => 'git://github.com/Nerian/bootstrap-wysihtml5-rails.git'
 ```
 
 and run bundle install.
 
-This gem doesn't include Bootstrap. You can get Bootstrap here: https://github.com/anjlab/bootstrap-rails
+This gem doesn't include Bootstrap. You can get Bootstrap here: https://github.com/twbs/bootstrap-sass
 
 ## Configuration
 
-Bootstrap-wysihtml5 depends on jquery and bootstrap.
+Bootstrap-wysihtml5 depends on bootstrap and jQuery.
 
 app/assets/stylesheets/application.css
 ``` css
 *= require bootstrap-wysihtml5
-// or
-*= require bootstrap-wysihtml5/b3
 ```
 
 app/assets/javascripts/application.js
 ```javascript
 //= require bootstrap-wysihtml5
-// or
-//= require bootstrap-wysihtml5/b3
-
 
 You may include all locales like this:
 
@@ -84,8 +79,6 @@ Just call wysihtml5() with any selector.
 </script>
 
 ```
-
-A live example:  http://jsfiddle.net/5UUrg/
 
 ## If using Turbolinks
 

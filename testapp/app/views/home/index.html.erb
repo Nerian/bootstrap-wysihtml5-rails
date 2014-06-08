@@ -1,18 +1,14 @@
 <h1>Home#index</h1>
 <p>Find me in app/views/home/index.html.erb</p>
 
-<textarea id="some-textarea" style="width: 810px; height: 200px;" placeholder="Enter text ...">
-  <b>This is some previous text</b>
-</textarea>
+<div id="some_div">
+  Hello
+</div>
+
+<textarea class="textarea" placeholder="Enter text ..." style='width: 100%;height: 300px'></textarea>
 
 <script type="text/javascript">
-  $('#some-textarea').wysihtml5({
-  	"font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
-  	"emphasis": true, //Italics, bold, etc. Default true
-  	"lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
-  	"html": true, //Button which allows you to edit the generated HTML. Default false
-  	"link": true, //Button to insert a link. Default true
-  	"image": true, //Button to insert an image. Default true,
-  	"color": true //Button to change color of font
-  });
+  $('.textarea').wysihtml5({locale: 'es-ES'});
+
+  $('#some_div').wysihtml5();
 </script>

@@ -1,71 +1,31 @@
 #!/usr/bin/env rake
 require File.expand_path('../lib/bootstrap-wysihtml5-rails/version', __FILE__)
 
-ORIGIN_LIB_PATH = "bootstrap-wysihtml5/lib"
-ORIGIN_SRC_PATH = "bootstrap-wysihtml5/src"
-DEST_JAVASCRIPT_PATH = "vendor/assets/javascripts/bootstrap-wysihtml5"
-DEST_CSS_PATH = "vendor/assets/stylesheets/bootstrap-wysihtml5"
-
-def b2
-  system("cd bootstrap-wysihtml5 && git checkout master")
-
-  system("cp #{ORIGIN_SRC_PATH}/bootstrap-wysihtml5.css #{DEST_CSS_PATH}/core.css")
-
-  core_file = File.read("#{ORIGIN_SRC_PATH}/bootstrap-wysihtml5.js")
-  original_string = /stylesheets: \[".\/lib\/css\/wysiwyg-color.css"\]/
-  objective_string = "stylesheets: [\"<%= stylesheet_path('bootstrap-wysihtml5/wysiwyg-color.css') %>\"]"
-
-  replaced   = core_file.gsub(original_string, objective_string)
-
-  File.open("#{DEST_JAVASCRIPT_PATH}/core.js.erb", "w") { |file| file.puts replaced }
+def copy_locales
+  Dir['bootstrap-wysihtml5/dist/locales/*'].each do |file|
+    `cp #{file} vendor/assets/javascripts/bootstrap-wysihtml5/locales/#{File.basename(file).gsub('bootstrap-wysihtml5.', '')}`
+  end
 end
 
-def b3
-  system("cd bootstrap-wysihtml5 && git checkout tb3")
-
-  system("cp #{ORIGIN_SRC_PATH}/bootstrap-wysihtml5.css #{DEST_CSS_PATH}/core-b3.css")
-
-  core_file = File.read("#{ORIGIN_SRC_PATH}/bootstrap-wysihtml5.js")
-  original_string = /stylesheets: \[".\/lib\/css\/wysiwyg-color.css"\]/
-  objective_string = "stylesheets: [\"<%= stylesheet_path('bootstrap-wysihtml5/wysiwyg-color.css') %>\"]"
-
-  replaced   = core_file.gsub(original_string, objective_string)
-
-  File.open("#{DEST_JAVASCRIPT_PATH}/core-b3.js.erb", "w") { |file| file.puts replaced }
+def copy_javascript
+  `cp bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.all.min.js vendor/assets/javascripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.js`
 end
 
-
+def copy_css
+  `cp bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.css vendor/assets/stylesheets/bootstrap-wysihtml5/bootstrap3-wysihtml5.css`
+end
 
 desc "Update assets"
 task 'update' do
   if Dir.exist?('bootstrap-wysihtml5')
     system("cd bootstrap-wysihtml5 && git pull && cd ..")
   else
-    system("git clone git://github.com/jhollingworth/bootstrap-wysihtml5.git bootstrap-wysihtml5")
-    # system("cd bootstrap-wysihtml5 && git remote add b3 git@github.com:artillery/bootstrap-wysihtml5.git")
-    # system("cd bootstrap-wysihtml5 && git fetch b3")
-    # system("cd bootstrap-wysihtml5 && git checkout -b tb3 b3/master")
+    system("git clone git://github.com/Waxolunist/bootstrap3-wysihtml5-bower.git bootstrap-wysihtml5")
   end
 
-  Dir.foreach("bootstrap-wysihtml5/src/locales") do |file|
-    unless file == '.' || file == '..'
-      abbreviated_file_name = file.gsub('bootstrap-wysihtml5.', '')
-      system("cp #{ORIGIN_SRC_PATH}/locales/#{file} #{DEST_JAVASCRIPT_PATH}/locales/#{abbreviated_file_name}")
-    end
-  end
-
-  system("cp #{ORIGIN_LIB_PATH}/js/wysihtml5-0.3.0.js #{DEST_JAVASCRIPT_PATH}/wysihtml5.js")
-  system("cp #{ORIGIN_LIB_PATH}/css/wysiwyg-color.css #{DEST_CSS_PATH}/wysiwyg-color.css")
-
-  b2
-  # b3
-
-  # ["#{DEST_JAVASCRIPT_PATH}/core.js.erb", "#{DEST_JAVASCRIPT_PATH}/core-b3.js.erb"].each do |file|
-  ["#{DEST_JAVASCRIPT_PATH}/core.js.erb"].each do |file|
-    initial = File.read(file)
-    initial = "//= depend_on_asset \"bootstrap-wysihtml5/wysiwyg-color.css\"\n\n" + initial
-    File.write(file, initial)
-  end
+  copy_locales
+  copy_javascript
+  copy_css
 
   system("git status")
 end

@@ -1,2 +1,1 @@
-//= require ./wysihtml5
-//= require ./core
+//= require ./bootstrap3-wysihtml5
