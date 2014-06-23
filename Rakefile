@@ -1,26 +1,34 @@
 #!/usr/bin/env rake
 require File.expand_path('../lib/bootstrap-wysihtml5-rails/version', __FILE__)
+require 'json'
+
+BASE_FOLDER = 'bower_components/bootstrap3-wysihtml5-bower/dist'
 
 def copy_locales
-  Dir['bootstrap-wysihtml5/dist/locales/*'].each do |file|
+  Dir["#{BASE_FOLDER}/locales/*"].each do |file|
     `cp #{file} vendor/assets/javascripts/bootstrap-wysihtml5/locales/#{File.basename(file).gsub('bootstrap-wysihtml5.', '')}`
   end
 end
 
 def copy_javascript
-  `cp bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.all.min.js vendor/assets/javascripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.js`
+  `cp #{BASE_FOLDER}/bootstrap3-wysihtml5.all.min.js vendor/assets/javascripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.js`
 end
 
 def copy_css
-  `cp bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.css vendor/assets/stylesheets/bootstrap-wysihtml5/bootstrap3-wysihtml5.css`
+  `cp #{BASE_FOLDER}/bootstrap3-wysihtml5.css vendor/assets/stylesheets/bootstrap-wysihtml5/bootstrap3-wysihtml5.css`
+end
+
+def print_version
+  puts "bootstrap3-wysihtml5-bower #{JSON.parse(File.read(BASE_FOLDER + '/../.bower.json'))['version']}"
+  puts "bootstrap-wysihtml5-rails #{BootstrapWysihtml5Rails::Rails::VERSION}"
 end
 
 desc "Update assets"
 task 'update' do
   if Dir.exist?('bootstrap-wysihtml5')
-    system("cd bootstrap-wysihtml5 && git pull && cd ..")
+    system("bower update bootstrap3-wysihtml5-bower")
   else
-    system("git clone git://github.com/Waxolunist/bootstrap3-wysihtml5-bower.git bootstrap-wysihtml5")
+    system("bower install bootstrap3-wysihtml5-bower")
   end
 
   copy_locales
@@ -28,6 +36,8 @@ task 'update' do
   copy_css
 
   system("git status")
+
+  print_version
 end
 
 desc "Build"

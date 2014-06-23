@@ -1,3 +1,4 @@
 Gemfile.lock
 *.gem
 /bootstrap-wysihtml5
+bower_components
