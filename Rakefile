@@ -15,7 +15,7 @@ def copy_javascript
 end
 
 def copy_css
-  `cp #{BASE_FOLDER}/bootstrap3-wysihtml5.css vendor/assets/stylesheets/bootstrap-wysihtml5/bootstrap3-wysihtml5.css`
+  `cp #{BASE_FOLDER}/bootstrap3-wysihtml5.css vendor/assets/stylesheets/bootstrap3-wysihtml5.css`
 end
 
 def print_version
