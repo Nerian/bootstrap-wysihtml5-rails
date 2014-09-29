@@ -10,7 +10,7 @@ http://twitter.github.com/bootstrap/
 
 Bootstrap Wysihtml5 is a plugin for Bootstrap designed by James Hollingworth. It provides a stylish wysiwyg editor for Bootstrap. We use Christian Sterzl's fork.
 
-https://github.com/Waxolunist/bootstrap3-wysihtml5-bower
+https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg
 
 bootstrap-wysihtml5-rails project integrates it with Rails 3 assets pipeline.
 
