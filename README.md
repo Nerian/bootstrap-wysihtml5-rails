@@ -59,7 +59,15 @@ Or just add the ones that you want
 
 You may need to restart your rails server.
 
-## Using bootstrap-wysihtml5-rails
+## Using bootstrap-wysihtml5-rails with simple_form
+
+There is `simple_form` input which you can apply via `as: :wysihtml5` option.
+
+```erb
+<%= f.input :content, as: :wysihtml5 %>
+```
+
+## Using bootstrap-wysihtml5-rails directly
 
 Just call wysihtml5() with any selector.
 
