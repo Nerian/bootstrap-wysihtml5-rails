@@ -5,6 +5,6 @@ class Wysihtml5Input < SimpleForm::Inputs::TextInput
       "$('textarea[id=#{idf}]').wysihtml5();".html_safe
     end
 
-    super + <% content_for :javascript do %> + script + <% end %>
+    super + content_for(:javascript) do  script  end
   end
 end
