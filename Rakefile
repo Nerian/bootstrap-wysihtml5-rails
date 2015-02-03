@@ -3,6 +3,8 @@ require File.expand_path('../lib/bootstrap-wysihtml5-rails/version', __FILE__)
 require 'json'
 
 BASE_FOLDER = 'bower_components/bootstrap3-wysihtml5-bower/dist'
+WYSIHTMLX = 'bower_components/wysihtml5x/dist'
+HANDLEBARS = 'bower_components/handlebars'
 
 def copy_locales
   Dir["#{BASE_FOLDER}/locales/*"].each do |file|
@@ -11,7 +13,13 @@ def copy_locales
 end
 
 def copy_javascript
-  `cp #{BASE_FOLDER}/bootstrap3-wysihtml5.all.min.js vendor/assets/javascripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.js`
+  `cp #{BASE_FOLDER}/templates.js vendor/assets/javascripts/bootstrap-wysihtml5/templates.js`
+  `cp #{BASE_FOLDER}/bootstrap3-wysihtml5.js vendor/assets/javascripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.js`
+  `cp #{BASE_FOLDER}/commands.js vendor/assets/javascripts/bootstrap-wysihtml5/commands.js`
+  `cp #{WYSIHTMLX}/wysihtml5x-toolbar.js vendor/assets/javascripts/bootstrap-wysihtml5/wysihtml5x-toolbar.js`
+  `cp #{HANDLEBARS}/handlebars.runtime.min.js vendor/assets/javascripts/bootstrap-wysihtml5/handlebars.runtime.min.js`
+
+  `cp #{BASE_FOLDER}/bootstrap3-wysihtml5.all.min.js vendor/assets/javascripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js`
 end
 
 def copy_css
@@ -37,9 +45,9 @@ task 'update' do
 
   system("git status")
 
-  file_path = 'vendor/assets/javascripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.js'
+  file_path = 'vendor/assets/javascripts/bootstrap-wysihtml5/templates.js'
   file = File.read(file_path)
-  file = file.gsub('<input value="http://" class="bootstrap-wysihtml5-insert-image-url form-control">', '<input value="http://" class="bootstrap-wysihtml5-insert-image-url form-control" data-wysihtml5-dialog-field="src">')
+  file = file.gsub('<input value=\"http://\" class=\"bootstrap-wysihtml5-insert-image-url form-control\">', '<input value=\"http://\" class=\"bootstrap-wysihtml5-insert-image-url form-control\" data-wysihtml5-dialog-field=\"src\">')
   File.write(file_path, file)
 
   print_version

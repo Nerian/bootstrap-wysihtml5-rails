@@ -57,6 +57,15 @@ Or just add the ones that you want
 //= require bootstrap-wysihtml5/locales/es-ES
 ```
 
+`//= require bootstrap-wysihtml5` will embed both wysihtml5x and handlebars. But you can fine tune what you require, like this:
+
+```javascript
+//= require bootstrap-wysihtml5/wysihtml5x-toolbar.js
+//= require bootstrap-wysihtml5/handlebars.runtime.min.js
+
+//= require bootstrap-wysihtml5/minimum
+```
+
 You may need to restart your rails server.
 
 ## Using bootstrap-wysihtml5-rails directly
