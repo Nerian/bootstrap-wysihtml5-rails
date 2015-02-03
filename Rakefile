@@ -37,6 +37,11 @@ task 'update' do
 
   system("git status")
 
+  file_path = 'vendor/assets/javascripts/bootstrap-wysihtml5/bootstrap3-wysihtml5.js'
+  file = File.read(file_path)
+  file = file.gsub('<input value="http://" class="bootstrap-wysihtml5-insert-image-url form-control">', '<input value="http://" class="bootstrap-wysihtml5-insert-image-url form-control" data-wysihtml5-dialog-field="src">')
+  File.write(file_path, file)
+
   print_version
 end
 
