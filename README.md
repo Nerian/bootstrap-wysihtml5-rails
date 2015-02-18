@@ -94,6 +94,12 @@ There is `simple_form` input which you can apply via `as: :wysihtml5` option.
 ```erb
 <%= f.input :content, as: :wysihtml5 %>
 ```
+add in application.html.erb (Layout) after the javascript_include_tag
+
+```erb
+<%= yield :javascript %>
+```
+
 
 ## If using Turbolinks
 
