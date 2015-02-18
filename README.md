@@ -28,7 +28,7 @@ gem 'bootstrap-wysihtml5-rails'
 or you can install from latest build;
 
 ``` ruby
-gem 'bootstrap-wysihtml5-rails', :git => 'git://github.com/Nerian/bootstrap-wysihtml5-rails.git'
+gem 'bootstrap-wysihtml5-rails', github: 'nerian/bootstrap-wysihtml5-rails'
 ```
 and run `bundle install`.
 
