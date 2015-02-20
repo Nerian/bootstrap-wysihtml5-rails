@@ -5,6 +5,24 @@ require 'json'
 BASE_FOLDER = 'bower_components/bootstrap3-wysihtml5-bower/dist'
 WYSIHTMLX = 'bower_components/wysihtml5x/dist'
 HANDLEBARS = 'bower_components/handlebars'
+COLORS = '"._wysihtml5-temp     { display: none; }",
+        ".wysiwyg-color-black {color: black;}",
+        ".wysiwyg-color-silver {color: silver;}",
+        ".wysiwyg-color-gray {color: gray;}",
+        ".wysiwyg-color-white {color: white;}",
+        ".wysiwyg-color-maroon {color: maroon;}",
+        ".wysiwyg-color-red {color: red;}",
+        ".wysiwyg-color-purple {color: purple;}",
+        ".wysiwyg-color-fuchsia {color: fuchsia;}",
+        ".wysiwyg-color-green {color: green;}",
+        ".wysiwyg-color-lime {color: lime;}",
+        ".wysiwyg-color-olive {color: olive;}",
+        ".wysiwyg-color-yellow {color: yellow;}",
+        ".wysiwyg-color-navy {color: navy;}",
+        ".wysiwyg-color-blue {color: blue;}",
+        ".wysiwyg-color-teal {color: teal;}",
+        ".wysiwyg-color-aqua {color: aqua;}",
+        ".wysiwyg-color-orange {color: orange;}",'
 
 def copy_locales
   Dir["#{BASE_FOLDER}/locales/*"].each do |file|
@@ -48,6 +66,11 @@ task 'update' do
   file_path = 'vendor/assets/javascripts/bootstrap-wysihtml5/templates.js'
   file = File.read(file_path)
   file = file.gsub('<input value=\"http://\" class=\"bootstrap-wysihtml5-insert-image-url form-control\">', '<input value=\"http://\" class=\"bootstrap-wysihtml5-insert-image-url form-control\" data-wysihtml5-dialog-field=\"src\">')
+  File.write(file_path, file)
+
+  file_path = 'vendor/assets/javascripts/bootstrap-wysihtml5/wysihtml5x-toolbar.js'
+  file = File.read(file_path)
+  file = file.gsub('"._wysihtml5-temp     { display: none; }",', COLORS)
   File.write(file_path, file)
 
   print_version
