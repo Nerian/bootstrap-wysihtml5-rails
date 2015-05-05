@@ -6,7 +6,7 @@
 
 [Bootstrap](http://getbootstrap.com) is a toolkit from Twitter designed to kickstart development of webapps and sites. It includes base CSS and HTML for typography, forms, buttons, tables, grids, navigation, and more.
 
-http://twitter.github.com/bootstrap/
+http://getbootstrap.com/
 
 Bootstrap Wysihtml5 is a plugin for Bootstrap designed by James Hollingworth. It provides a stylish wysiwyg editor for Bootstrap. We use Christian Sterzl's fork.
 
