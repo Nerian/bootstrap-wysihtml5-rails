@@ -4,7 +4,7 @@ require File.expand_path('../lib/bootstrap-wysihtml5-rails/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Gonzalo Rodríguez-Baltanás Díaz"]
   gem.email         = ["siotopo@gmail.com"]
-  gem.description   = %q{A wysiwyg text editor for Twitter Bootstrap}
+  gem.description   = %q{A wysiwyg text editor for Bootstrap}
   gem.homepage      = "https://github.com/Nerian/bootstrap-wysihtml5-rails"
   gem.summary       = gem.description
   gem.license       = 'MIT'
