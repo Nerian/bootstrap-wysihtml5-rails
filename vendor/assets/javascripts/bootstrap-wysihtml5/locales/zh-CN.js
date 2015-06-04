@@ -24,6 +24,7 @@
             bold: "粗体",
             italic: "斜体",
             underline: "下划线"
+			small: "小号字"
         },
         lists: {
             unordered: "项目符号",
