@@ -16,7 +16,7 @@ bootstrap-wysihtml5-rails project integrates it with Rails 3 assets pipeline.
 
 https://github.com/Nerian/bootstrap-wysihtml5-rails
 
-__This repo is only for packaging bootstrap-wysihtml5 into a ruby gem. If yor Pull Request is about changing bootstrap-wysihtml5 (any file in the 'vendor' folder) please create it in their repository, not here. __
+__This repo is only for packaging bootstrap-wysihtml5 into a ruby gem. If yor Pull Request is about changing bootstrap-wysihtml5 (any file in the 'vendor' folder) please create it in their repository, not here.__
 
 __Latest version with Bootstrap 2 support was `0.3.1.24`. New releases only package Bootstrap 3 support.__
 
