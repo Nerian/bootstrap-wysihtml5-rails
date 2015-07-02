@@ -47,16 +47,16 @@ var bsWysihtml5 = function($, wysihtml5) {
       if(editor.composer.editableArea.contentDocument) {
         this.addMoreShortcuts(editor, editor.composer.editableArea.contentDocument.body || editor.composer.editableArea.contentDocument, options.shortcuts);
       } else {
-        this.addMoreShortcuts(editor, editor.composer.editableArea, options.shortcuts);    
+        this.addMoreShortcuts(editor, editor.composer.editableArea, options.shortcuts);
       }
-      
+
 
       if(options && options.events) {
         for(var eventName in options.events) {
           editor.on(eventName, options.events[eventName]);
         }
       }
-      
+
       editor.on('beforeload', this.syncBootstrapDialogEvents);
       //syncBootstrapDialogEvents();
       return editor;
@@ -189,7 +189,7 @@ var bsWysihtml5 = function($, wysihtml5) {
       return methods.init.apply( this, arguments );
     } else {
       $.error( 'Method ' +  method + ' does not exist on jQuery.wysihtml5' );
-    }    
+    }
   };
 
   $.fn.wysihtml5.Constructor = Wysihtml5;
@@ -243,6 +243,8 @@ var bsWysihtml5 = function($, wysihtml5) {
         'h4': {},
         'h5': {},
         'h6': {},
+        'sup': {},
+        'sub': {},
         'blockquote': {},
         'u': 1,
         'img': {
@@ -274,7 +276,7 @@ var bsWysihtml5 = function($, wysihtml5) {
     shortcuts: {
       '83': 'small'     // S
     }
-    
+
   };
 
   if (typeof $.fn.wysihtml5.defaultOptionsCache === 'undefined') {
