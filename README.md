@@ -96,6 +96,11 @@ There is `simple_form` input which you can apply via `as: :wysihtml5` option.
 ```erb
 <%= f.input :content, as: :wysihtml5 %>
 ```
+Or with [bootstrap3-wysiwyg](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg#options) options
+
+```erb
+<%= f.input :content, as: :wysihtml5, wysihtml5: { locale: "es-ES" } %>
+```
 
 ## If using Turbolinks
 
