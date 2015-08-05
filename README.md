@@ -110,6 +110,31 @@ $(document).on('page:load', function(){
 })
 ```
 
+## Passing options
+
+To activate direct html editing and disable blockquote:
+```
+  $('.wysihtml5').wysihtml5({'toolbar': {'blockquote:' false, 'html': true}})
+```
+
+Toolbal default options are:
+
+```
+toolbar: {
+      'font-styles': true,
+      'color': false,
+      'emphasis': {
+        'small': true
+      },
+      'blockquote': true,
+      'lists': true,
+      'html': false,
+      'link': true,
+      'image': true,
+      'smallmodals': false
+    }
+```
+
 ## License
 Copyright (c) 2012-2014 Gonzalo Rodríguez-Baltanás Díaz
 
