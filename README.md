@@ -114,7 +114,7 @@ $(document).on('page:load', function(){
 
 To activate direct html editing and disable blockquote:
 ```
-  $('.wysihtml5').wysihtml5({'toolbar': {'blockquote:' false, 'html': true}})
+  $('.wysihtml5').wysihtml5({'toolbar': {'blockquote': false, 'html': true}})
 ```
 
 Toolbal default options are:
