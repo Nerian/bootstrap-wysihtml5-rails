@@ -45,6 +45,11 @@ app/assets/stylesheets/application.css
 *= require bootstrap-wysihtml5
 ```
 
+if you are using SASS: app/assets/stylesheets/application.scss
+``` scss
+@import "bootstrap-wysihtml5/bootstrap3-wysihtml5";
+```
+
 app/assets/javascripts/application.js
 ```javascript
 //= require bootstrap-wysihtml5
