@@ -115,6 +115,14 @@ $(document).on('page:load', function(){
 })
 ```
 
+## Using bootstrap-wysihtml5-rails with Font Awesome
+
+In the case you're not using Glyphicons but Font-Awesome, here is how to make Wysihtml5 use Font-Awesome :
+
+```javascript
+$(elem).wysihtml5({ toolbar:{ "fa": true } });
+```
+
 ## Passing options
 
 To activate direct html editing and disable blockquote:
