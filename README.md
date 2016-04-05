@@ -112,7 +112,7 @@ Or with [bootstrap3-wysiwyg](https://github.com/bootstrap-wysiwyg/bootstrap3-wys
 ```
 $(document).on('page:load', function(){
   window['rangy'].initialized = false
-})
+});
 ```
 
 ## Using bootstrap-wysihtml5-rails with Font Awesome
