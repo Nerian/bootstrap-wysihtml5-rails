@@ -12598,9 +12598,9 @@ wysihtml5.views.View = Base.extend(
 
     // --------- User interaction tracking --
 
-    dom.observe(focusBlurElement, interactionEvents, function() {
+    dom.observe(focusBlurElement, interactionEvents, function(rootEvent) {
       setTimeout(function() {
-        that.parent.fire("interaction").fire("interaction:composer");
+        that.parent.fire("interaction").fire("interaction:composer", { rootEvent: rootEvent });
       }, 0);
     });
 
@@ -13033,7 +13033,11 @@ wysihtml5.views.View = Base.extend(
     contentEditableMode: false,
     // Classname of container that editor should not touch and pass through
     // Pass false to disable
-    uneditableContainerClassname: "wysihtml5-uneditable-container"
+    uneditableContainerClassname: "wysihtml5-uneditable-container",
+    // InteractionEvents that do not trigger ONLY Link modal when interact with editor (drop, paste, focus, mouseup, keyup,)
+    interactionEventsNotTriggerLinkModal: ['focus', 'keyup'], // e.g. ['focus', 'keyup'] will not trigger modal when focus/press the cursor at a link in the editor
+    // InteractionEvents that do not trigger ONLY Image modal when interact with editor (drop, paste, focus, mouseup, keyup)
+    interactionEventsNotTriggerImageModal: []
   };
 
   wysihtml5.Editor = wysihtml5.lang.Dispatcher.extend(
@@ -13593,7 +13597,12 @@ wysihtml5.views.View = Base.extend(
       this.editor.focus(false);
 
       this.composer.commands.exec(command, commandValue);
-      this._updateLinkStates();
+      this._updateLinkStates({
+        rootEvent: {
+          type: 'commandTriggered',
+          sourceCommand: command
+        }
+      });
     },
 
     execAction: function(action) {
@@ -13650,8 +13659,8 @@ wysihtml5.views.View = Base.extend(
         event.preventDefault();
       });
 
-      editor.on("interaction:composer", function() {
-          that._updateLinkStates();
+      editor.on("interaction:composer", function(context) {
+          that._updateLinkStates(context);
       });
 
       editor.on("focus:composer", function() {
@@ -13683,7 +13692,31 @@ wysihtml5.views.View = Base.extend(
       });
     },
 
-    _updateLinkStates: function() {
+    _shouldTriggerEditorModal: function(command, context) {
+      if (!command.dialog) {
+        return false;
+      }
+
+      if (typeof(context) !== "object" || typeof(context.rootEvent) !== "object") {
+        //keep it compatible with original since there was no 'context'
+        return true;
+      } else if (context.rootEvent.type === 'commandTriggered') {
+        return context.rootEvent.sourceCommand === command.name;
+      } else {
+        var ignoreEvents = []
+        switch(command.name) {
+          case 'createLink':
+            ignoreEvents = this.editor.config.interactionEventsNotTriggerLinkModal;
+            break;
+          case 'insertImage':
+            ignoreEvents = this.editor.config.interactionEventsNotTriggerImageModal;
+            break;
+        }
+        return ignoreEvents.indexOf(context.rootEvent.type) < 0;
+      }
+    },
+
+    _updateLinkStates: function(context) {
 
       var commandMapping    = this.commandMapping,
           actionMapping     = this.actionMapping,
@@ -13700,7 +13733,7 @@ wysihtml5.views.View = Base.extend(
           if (command.group) {
             dom.removeClass(command.group, CLASS_NAME_COMMAND_ACTIVE);
           }
-          if (command.dialog) {
+          if (this._shouldTriggerEditorModal(command, context)) {
             command.dialog.hide();
           }
         } else {
@@ -13720,7 +13753,7 @@ wysihtml5.views.View = Base.extend(
           if (command.group) {
             dom.addClass(command.group, CLASS_NAME_COMMAND_ACTIVE);
           }
-          if (command.dialog) {
+          if (this._shouldTriggerEditorModal(command, context)) {
             if (typeof(state) === "object" || wysihtml5.lang.object(state).isArray()) {
 
               if (!command.dialog.multiselect && wysihtml5.lang.object(state).isArray()) {
@@ -13741,7 +13774,7 @@ wysihtml5.views.View = Base.extend(
           if (command.group) {
             dom.removeClass(command.group, CLASS_NAME_COMMAND_ACTIVE);
           }
-          if (command.dialog) {
+          if (this._shouldTriggerEditorModal(command, context)) {
             command.dialog.hide();
           }
         }
